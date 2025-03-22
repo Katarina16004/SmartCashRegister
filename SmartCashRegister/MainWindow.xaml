@@ -5,12 +5,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartCashRegister"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400">
+        Title="Prijava na kasu" Height="450" Width="400"
+        Background="#FFF8DC">
+
+    <Window.Resources>
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F5DEB3"/>
+                    <Setter Property="BorderBrush" Value="#DEB887"/>
+                </Trigger>
+            </Style.Triggers>
+
+            <Setter Property="Background" Value="#DEB887"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderBrush" Value="#F5DEB3"/>
+            <Setter Property="BorderThickness" Value="2"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#F5DEB3"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+
+        <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#F5DEB3"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Margin" Value="0,10"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBox x:Name="UsernameTextBox" Width="200" Height="auto" TextAlignment="Left" />
-            <PasswordBox x:Name="PasswordBox" Width="200" Height="auto"  Margin="0,10,0,10"  />
-            <Button Content="Prijavi se" Width="200" Height="30" Click="Button_Click" />
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+            <Image Source="Resources/logo.png" Width="120" Height="70" HorizontalAlignment="Center" Margin="-20"/>
+            <Label Content="Cash Register" HorizontalAlignment="Center" FontStyle="Italic"></Label>
+            <TextBlock Text="Prijavite se da biste pristupili sistemu" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+            <TextBlock Text="Korisničko ime" FontSize="14" HorizontalAlignment="Center" Margin="0,5"/>
+            <TextBox x:Name="UsernameTextBox" Style="{StaticResource ModernTextBox}" TextAlignment="Left"/>
+            <TextBlock Text="Lozinka" FontSize="14" HorizontalAlignment="Center" Margin="0,5"/>
+            <PasswordBox x:Name="PasswordBox" Style="{StaticResource ModernPasswordBox}"/>
+            <Button Content="Prijavi se" Style="{StaticResource ModernButton}" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Window>
