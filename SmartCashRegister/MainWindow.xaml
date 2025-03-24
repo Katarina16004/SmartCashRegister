@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartCashRegister"
         mc:Ignorable="d"
-        Title="Prijava na kasu" Height="450" Width="400"
+        Title="Prijava na kasu" Height="470" Width="420"
         Background="#FFF8DC">
 
     <Window.Resources>
@@ -43,7 +43,8 @@
             <Setter Property="Width" Value="250"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="7"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#F5DEB3"/>
             <Setter Property="BorderThickness" Value="2"/>
@@ -54,7 +55,8 @@
             <Setter Property="Width" Value="250"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="7"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#F5DEB3"/>
             <Setter Property="BorderThickness" Value="2"/>
@@ -64,14 +66,22 @@
 
     <Grid>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="340">
             <Image Source="Resources/logo.png" Width="120" Height="70" HorizontalAlignment="Center" Margin="-20"/>
             <Label Content="Cash Register" HorizontalAlignment="Center" FontStyle="Italic"></Label>
             <TextBlock Text="Prijavite se da biste pristupili sistemu" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
             <TextBlock Text="Korisničko ime" FontSize="14" HorizontalAlignment="Center" Margin="0,5"/>
             <TextBox x:Name="UsernameTextBox" Style="{StaticResource ModernTextBox}" TextAlignment="Left"/>
             <TextBlock Text="Lozinka" FontSize="14" HorizontalAlignment="Center" Margin="0,5"/>
-            <PasswordBox x:Name="PasswordBox" Style="{StaticResource ModernPasswordBox}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <PasswordBox x:Name="PasswordBox" Style="{StaticResource ModernPasswordBox}" Width="250" Margin="40,0,0,0" PasswordChanged="PasswordBox_PasswordChanged" />
+                <TextBox x:Name="PasswordTextBox" Style="{StaticResource ModernTextBox}" Margin="40,0,0,0" Visibility="Collapsed" Width="250"/>
+                <Image x:Name="EyeIcon" Source="Resources/otvoreno_oko.png" Width="40" Height="40" Grid.Column="1" MouseDown="EyeIcon_MouseDown"/>
+            </Grid>
             <Button Content="Prijavi se" Style="{StaticResource ModernButton}" Click="Button_Click"/>
         </StackPanel>
     </Grid>

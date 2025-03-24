@@ -18,12 +18,16 @@ namespace SmartCashRegister
     public partial class MainWindow : Window
     {
         private AutentifikacijaService _autentifikacija;
+        bool vidljivostLozinke = false;
         public MainWindow()
         {
             InitializeComponent();
-            UsernameTextBox.Focus();
             IPristupBaziService dbPristup = new PristupBaziService();
             _autentifikacija = new AutentifikacijaService(dbPristup);
+
+            PasswordBox.PasswordChanged += PasswordBox_PasswordChanged;
+            EyeIcon.Visibility = Visibility.Collapsed;
+            UsernameTextBox.Focus();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -47,6 +51,36 @@ namespace SmartCashRegister
             {
                 MessageBox.Show("Neispravno korisničko ime ili sifra");
             }
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(PasswordBox.Password))
+                EyeIcon.Visibility = Visibility.Collapsed;
+            else
+                EyeIcon.Visibility = Visibility.Visible;
+        }
+
+        private void EyeIcon_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (vidljivostLozinke)
+            {
+                PasswordTextBox.Visibility = Visibility.Collapsed;
+                PasswordBox.Visibility = Visibility.Visible;
+                PasswordBox.Password = PasswordTextBox.Text;
+
+                EyeIcon.Source = new BitmapImage(new System.Uri("Resources/otvoreno_oko.png", System.UriKind.Relative));
+            }
+            else
+            {
+                PasswordTextBox.Visibility = Visibility.Visible;
+                PasswordBox.Visibility = Visibility.Collapsed;
+                PasswordTextBox.Text = PasswordBox.Password;
+
+                EyeIcon.Source = new BitmapImage(new System.Uri("Resources/zatvoreno_oko.png", System.UriKind.Relative));
+            }
+
+            vidljivostLozinke = !vidljivostLozinke;
         }
     }
 }
