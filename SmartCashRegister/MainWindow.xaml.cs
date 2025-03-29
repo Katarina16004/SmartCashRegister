@@ -1,14 +1,9 @@
-﻿using SmartCashRegister.Services;
-using System.Text;
+﻿using SmartCashRegister.Models;
+using SmartCashRegister.Services;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SmartCashRegister
 {
@@ -19,6 +14,7 @@ namespace SmartCashRegister
     {
         private AutentifikacijaService _autentifikacija;
         bool vidljivostLozinke = false;
+        Osoba? prijavljeni;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,19 +29,26 @@ namespace SmartCashRegister
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
+            string password;
+            if (PasswordBox.Visibility == Visibility.Visible)
+                password = PasswordBox.Password;
+            else
+                password = PasswordTextBox.Text;
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Molimo Vas da popunite sva polja");
                 return;
             }
+            prijavljeni = _autentifikacija.UspesnaPrijava(username, password);
+            if (prijavljeni!=null)
+            { 
+                Meni meniWindow=new Meni(prijavljeni);
+                this.Close();
 
-            bool isAuthenticated = _autentifikacija.UspesnaPrijava(username, password);
-
-            if (isAuthenticated)
-            {
-                MessageBox.Show("Prijavljeni ste!");
+                meniWindow.ShowDialog();
+                
+                //MessageBox.Show("Prijavljeni ste!");
             }
             else
             {

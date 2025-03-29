@@ -7,22 +7,7 @@ namespace SmartCashRegister.Services
 {
     public class PristupBaziService: IPristupBaziService
     {
-        private readonly string? connectionString;
-
-        public PristupBaziService()
-        {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory()) 
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
-            connectionString = config.GetConnectionString("SqlConnection");
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new InvalidOperationException("Connection string is missing.");
-            }
-        }
+        private string connectionString = "Data Source=localhost;Initial Catalog=ProdavnicaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
         public DataTable ExecuteQuery(string query, SqlParameter[]? parameters = null)
         {

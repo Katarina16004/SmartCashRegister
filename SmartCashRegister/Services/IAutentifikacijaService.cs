@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartCashRegister.Models;
 
 namespace SmartCashRegister.Services
 {
     public interface IAutentifikacijaService
     {
-        bool UspesnaPrijava(string username, string password);
+        Osoba? UspesnaPrijava(string username, string password);
     }
 }
