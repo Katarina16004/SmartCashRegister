@@ -1,6 +1,6 @@
 ﻿using SmartCashRegister.Models;
 
-namespace SmartCashRegister.Services
+namespace SmartCashRegister.Services.Interfaces
 {
     public interface IAutentifikacijaService
     {

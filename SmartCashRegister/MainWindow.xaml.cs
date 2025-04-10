@@ -1,5 +1,6 @@
 ﻿using SmartCashRegister.Models;
 using SmartCashRegister.Services;
+using SmartCashRegister.Services.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

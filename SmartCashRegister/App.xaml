@@ -57,5 +57,48 @@
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Margin" Value="0,10"/>
         </Style>
+
+        <Style x:Key="ModernDataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="#FFF8E1"/>
+            <Setter Property="BorderBrush" Value="#DEB887"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RowStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Background" Value="#F5DEB3"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#DEB887"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="10,5"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="AlternatingRowBackground" Value="#FFF5E1"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#E0E0E0"/>
+        </Style>
+
+
     </Application.Resources>
 </Application>

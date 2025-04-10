@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace SmartCashRegister.Services
+namespace SmartCashRegister.Services.Interfaces
 {
     public interface IPristupBaziService
     {

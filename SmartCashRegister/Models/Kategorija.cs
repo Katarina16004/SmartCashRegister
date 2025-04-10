@@ -9,7 +9,7 @@ namespace SmartCashRegister.Models
     public class Kategorija
     {
         public int KategorijaId { get; set; }
-        public string Naziv { get; set; } = string.Empty;
+        public string? Naziv { get; set; } = string.Empty;
 
         public Kategorija() { }
 

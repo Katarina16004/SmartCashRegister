@@ -17,8 +17,8 @@
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                        <TextBlock x:Name="ImePrijavljenog" Text="Ime" FontSize="20" FontWeight="Bold" Foreground="black" Margin="3"/>
-                        <TextBlock x:Name="PrezimePrijavljenog" Grid.Row="1" Text="Prezime" FontSize="20" FontWeight="Bold" Foreground="Black" Margin="3"/>
+                        <TextBlock x:Name="ImePrijavljenog" Text="Ime" FontSize="20" FontWeight="DemiBold" Foreground="black" Margin="3"/>
+                        <TextBlock x:Name="PrezimePrijavljenog" Grid.Row="1" Text="Prezime" FontSize="20" FontWeight="DemiBold" Foreground="Black" Margin="3"/>
                         <Button x:Name="ButtonOdjava" Content="Odjava" Grid.Row="2" Style="{StaticResource ModernButton}" Foreground="#DEB887" Background="White" BorderBrush="#FFF8DC" Width="100" Height="35" Click="ButtonOdjava_Click" Margin="20"/>
                     </Grid>
 

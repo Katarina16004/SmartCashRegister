@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 using SmartCashRegister.Models;
+using SmartCashRegister.Services.Interfaces;
 
 namespace SmartCashRegister.Services
 {

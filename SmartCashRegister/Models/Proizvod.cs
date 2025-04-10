@@ -9,18 +9,18 @@ namespace SmartCashRegister.Models
     public class Proizvod
     {
         public int ProizvodId { get; set; }
-        public string Naziv { get; set; } = string.Empty;
+        public string? Naziv { get; set; } = string.Empty;
         public decimal Cena { get; set; } = 0;
         public int Kolicina { get; set; } = 0;
-        public string Barkod { get; set; } = string.Empty;
+        public string? Barkod { get; set; } = string.Empty;
         public int KategorijaId { get; set; }
-        public Kategorija Kategorija { get; set; } = new Kategorija();
+        public Kategorija? Kategorija { get; set; }
 
         public Proizvod()
         {
         }
 
-        public Proizvod(int proizvodId, string naziv, decimal cena, int kolicina, string barkod, int kategorijaId, Kategorija kategorija)
+        public Proizvod(int proizvodId, string naziv, decimal cena, int kolicina, string barkod, int kategorijaId)
         {
             ProizvodId = proizvodId;
             Naziv = naziv;
@@ -28,12 +28,11 @@ namespace SmartCashRegister.Models
             Kolicina = kolicina;
             Barkod = barkod;
             KategorijaId = kategorijaId;
-            Kategorija = kategorija;
         }
 
         public override string? ToString()
         {
-            return "Proizvod: " + ProizvodId + "\tNaziv: " + Naziv + "\nCena: " + Cena + "\tKolicina: " + Kolicina + "\nBarKod: " + Barkod + "\nKategorija: " + Kategorija.Naziv;
+            return "Proizvod: " + ProizvodId + "\tNaziv: " + Naziv + "\nCena: " + Cena + "\tKolicina: " + Kolicina + "\nBarKod: " + Barkod + "\nKategorijaID: " + KategorijaId;
         }
     }
 }

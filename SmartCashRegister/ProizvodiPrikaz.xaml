@@ -6,7 +6,48 @@
              xmlns:local="clr-namespace:SmartCashRegister"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Proizvodi Sekcija" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid Margin="10">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" >BarKod proizvoda: </Label>
+                <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" Grid.Row="1">Naziv proizvoda:</Label>
+                <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" Grid.Row="2">Kategorija proizvoda:</Label>
+                <TextBox x:Name="TextBox_BarKodProizvoda" Grid.Column="1" Style="{StaticResource ModernTextBox}"  TextChanged="TextBox_TextChanged"></TextBox>
+                <TextBox x:Name="TextBox_NazivProizvoda" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBox}" TextChanged="TextBox_TextChanged" ></TextBox>
+                <TextBox x:Name="TextBox_KategorijaProizvoda" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBox}" TextChanged="TextBox_TextChanged"></TextBox>
+                <Button x:Name="Button_PretraziProizvod" Grid.Column="2" Grid.RowSpan="3" Style="{StaticResource ModernButton}" Click="Button_PretraziProizvod_Click">Prikazi sve</Button>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal">
+                <DataGrid Style="{StaticResource ModernDataGrid}" x:Name="dataGridKategorije" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID kategorije" Binding="{Binding KategorijaId}" />
+                        <DataGridTextColumn Header="Naziv kategorije" Binding="{Binding Naziv}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid Style="{StaticResource ModernDataGrid}" Visibility="Hidden" x:Name="dataGridProizvodi" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID proizvoda" Binding="{Binding ProizvodId}" />
+                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" />
+                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" />
+                        <DataGridTextColumn Header="Količina" Binding="{Binding Kolicina}"/>
+                        <DataGridTextColumn Header="Barkod" Binding="{Binding Barkod}"/>
+                        <DataGridTextColumn Header="Kategorija ID" Binding="{Binding KategorijaId}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+            </StackPanel>
+            
+        </StackPanel>
     </Grid>
 </UserControl>

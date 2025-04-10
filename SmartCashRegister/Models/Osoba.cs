@@ -9,13 +9,13 @@ namespace SmartCashRegister.Models
     public class Osoba
     {
         public int OsobaId { get; set; }
-        public string Ime { get; set; } = string.Empty;
-        public string Prezime { get; set; } = string.Empty;
-        public string Jmbg { get; set; } = string.Empty;
-        public string Telefon { get; set; } = string.Empty;
-        public string Username {  get; set; } = string.Empty;
-        public string Sifra { get; set; } = string.Empty;
-        public string Uloga { get; set; } = string.Empty;
+        public string? Ime { get; set; } = string.Empty;
+        public string? Prezime { get; set; } = string.Empty;
+        public string? Jmbg { get; set; } = string.Empty;
+        public string? Telefon { get; set; } = string.Empty;
+        public string? Username {  get; set; } = string.Empty;
+        public string? Sifra { get; set; } = string.Empty;
+        public string? Uloga { get; set; } = string.Empty;
 
         public Osoba()
         {

@@ -1,4 +1,5 @@
 ﻿using SmartCashRegister.Models;
+using SmartCashRegister.Services;
 using System.Windows;
 
 namespace SmartCashRegister
@@ -9,6 +10,9 @@ namespace SmartCashRegister
     public partial class Meni : Window
     {
         Osoba prijavljeni;
+        private PristupBaziService dbPristup;
+        private PretragaProizvodaService pretragaProizvodaService;
+        private PrikazKategorijaService prikazKategorijaService;
         public Meni(Osoba prijavljeni)
         {
             InitializeComponent();
@@ -23,6 +27,10 @@ namespace SmartCashRegister
                 ButtonUrediProizvode.Visibility = Visibility.Visible;
             }
             MainContent.Content = new ProdajaPrikaz();
+
+            dbPristup = new PristupBaziService();
+            pretragaProizvodaService = new PretragaProizvodaService(dbPristup);
+            prikazKategorijaService = new PrikazKategorijaService(dbPristup);
         }
 
         private void ButtonProdaja_Click(object sender, RoutedEventArgs e)
@@ -38,13 +46,16 @@ namespace SmartCashRegister
         private void ButtonOdjava_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
-            mainWindow.ShowDialog();
+            mainWindow.Show();
             this.Close();
         }
 
         private void ButtonProizvodi_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new ProizvodiPrikaz();
+            if (prijavljeni.Uloga == "administrator")
+                MainContent.Content = new UredjivanjeProizvoda();
+            else
+                MainContent.Content = new ProizvodiPrikaz(pretragaProizvodaService,prikazKategorijaService);
         }
     }
 }
