@@ -53,7 +53,7 @@ namespace SmartCashRegister
         private void ButtonProizvodi_Click(object sender, RoutedEventArgs e)
         {
             if (prijavljeni.Uloga == "administrator")
-                MainContent.Content = new UredjivanjeProizvoda();
+                MainContent.Content = new UredjivanjeProizvoda(pretragaProizvodaService, prikazKategorijaService);
             else
                 MainContent.Content = new ProizvodiPrikaz(pretragaProizvodaService,prikazKategorijaService);
         }

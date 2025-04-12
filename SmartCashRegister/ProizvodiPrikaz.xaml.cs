@@ -26,7 +26,7 @@ namespace SmartCashRegister
             dataGridProizvodi.Visibility = Visibility.Visible;
             if (Button_PretraziProizvod.Content.ToString()=="Pretrazi")
             {
-                //prikaz po filterima
+                dataGridProizvodi.ItemsSource = _pretragaProizvodaService.PretraziProizvod(TextBox_BarKodProizvoda.Text, TextBox_NazivProizvoda.Text, TextBox_KategorijaProizvoda.Text);
             }
             else
             {
