@@ -7,6 +7,54 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Računi Sekcija" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" >ID računa:</Label>
+                <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" Grid.Row="1">Username prodavca:</Label>
+                <Label VerticalContentAlignment="Top" HorizontalAlignment="Center" FontWeight="DemiBold" Grid.Row="2">Datum izdavanja računa:</Label>
+                <TextBox x:Name="TextBox_IdRacuna" Grid.Column="1" Style="{StaticResource ModernTextBox}"  TextChanged="TextBox_TextChanged"></TextBox>
+                <TextBox x:Name="TextBox_UsernameProdavca" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBox}" TextChanged="TextBox_TextChanged" ></TextBox>
+                <DatePicker Name="DP_DatumRacuna" VerticalAlignment="Top" Width="150" Height="25" Margin="10" Grid.Row="2" Grid.Column="1" SelectedDateChanged="DP_DatumRacuna_SelectedDateChanged"></DatePicker>
+                <Button x:Name="Button_PretraziRacun" Grid.Column="2" Style="{StaticResource ModernButton}" Click="Button_PretraziRacun_Click">Prikazi sve</Button>
+                <Button x:Name="Button_RacunUPdf" Grid.Column="2" Grid.Row="1" Style="{StaticResource ModernButton}" Click="Button_RacunUPdf_Click">Izvezi u PDF</Button>
+                <StackPanel Grid.Column="2" Grid.Row="2">
+                    <Button x:Name="Button_Storniraj" Style="{StaticResource ModernButton}" Click="Button_Storniraj_Click">Storniraj</Button>
+                    <Button x:Name="Button_ObrisiRacun" Visibility="Hidden" Style="{StaticResource ModernButton}" Click="Button_ObrisiRacun_Click">Obrisi račun</Button>
+                </StackPanel>
+                
+            </Grid>
+
+            <StackPanel Orientation="Horizontal">
+               
+                <DataGrid Style="{StaticResource ModernDataGrid}" x:Name="dataGridRacuni" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID računa" Binding="{Binding RacunId}" />
+                        <DataGridTextColumn Header="Datum" Binding="{Binding Datum}" />
+                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" />
+                        <DataGridTextColumn Header="ID prodavca" Binding="{Binding OsobaId}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid  Style="{StaticResource ModernDataGrid}" Visibility="Hidden" x:Name="dataGridRacun" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID proizvoda" Binding="{Binding ProizvodId}" />
+                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" />
+                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" />
+                        <DataGridTextColumn Header="Količina" Binding="{Binding Kolicina}" />
+                        <DataGridTextColumn Header="Ukupna cena" Binding="{Binding Ukupno}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+        </StackPanel>
     </Grid>
 </UserControl>

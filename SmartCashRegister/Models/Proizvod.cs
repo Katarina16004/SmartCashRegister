@@ -14,7 +14,6 @@ namespace SmartCashRegister.Models
         public int Kolicina { get; set; } = 0;
         public string? Barkod { get; set; } = string.Empty;
         public int KategorijaId { get; set; }
-        public Kategorija? Kategorija { get; set; }
 
         public Proizvod()
         {

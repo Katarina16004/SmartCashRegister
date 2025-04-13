@@ -76,3 +76,19 @@ values
 ('Nikola', 'Nikolic', '4567890123456', '0634567890', 'NikolicN','prodavac456', 'prodavac');
 
 
+CREATE TABLE StavkaRacuna (
+    stavka_id INT PRIMARY KEY IDENTITY(1,1),
+    racun_id INT,
+    proizvod_id INT,
+    kolicina INT,
+    cena DECIMAL(10,2),
+
+    FOREIGN KEY (racun_id) REFERENCES Racun(raucn_id),
+    FOREIGN KEY (proizvod_id) REFERENCES Proizvod(proizvod_id)
+);
+
+EXEC sp_rename 'Racun.raucn_id', 'racun_id', 'COLUMN';
+
+ALTER TABLE Racun ADD status NVARCHAR(20) DEFAULT 'Aktivan';
+
+
