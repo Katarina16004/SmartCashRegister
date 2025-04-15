@@ -13,6 +13,7 @@ namespace SmartCashRegister
         private PristupBaziService dbPristup;
         private PretragaProizvodaService pretragaProizvodaService;
         private PrikazKategorijaService prikazKategorijaService;
+        private PretragaRacunaService pretragaRacunaService;
         public Meni(Osoba prijavljeni)
         {
             InitializeComponent();
@@ -31,6 +32,7 @@ namespace SmartCashRegister
             dbPristup = new PristupBaziService();
             pretragaProizvodaService = new PretragaProizvodaService(dbPristup);
             prikazKategorijaService = new PrikazKategorijaService(dbPristup);
+            pretragaRacunaService= new PretragaRacunaService(dbPristup);
         }
 
         private void ButtonProdaja_Click(object sender, RoutedEventArgs e)
@@ -40,7 +42,7 @@ namespace SmartCashRegister
 
         private void ButtonRacuni_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new RacuniPrikaz();
+            MainContent.Content = new RacuniPrikaz(pretragaRacunaService,prijavljeni);
         }
 
         private void ButtonOdjava_Click(object sender, RoutedEventArgs e)

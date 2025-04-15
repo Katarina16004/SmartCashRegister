@@ -22,9 +22,14 @@
                 <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" >ID računa:</Label>
                 <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" Grid.Row="1">Username prodavca:</Label>
                 <Label VerticalContentAlignment="Top" HorizontalAlignment="Center" FontWeight="DemiBold" Grid.Row="2">Datum izdavanja računa:</Label>
+                
                 <TextBox x:Name="TextBox_IdRacuna" Grid.Column="1" Style="{StaticResource ModernTextBox}"  TextChanged="TextBox_TextChanged"></TextBox>
                 <TextBox x:Name="TextBox_UsernameProdavca" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBox}" TextChanged="TextBox_TextChanged" ></TextBox>
-                <DatePicker Name="DP_DatumRacuna" VerticalAlignment="Top" Width="150" Height="25" Margin="10" Grid.Row="2" Grid.Column="1" SelectedDateChanged="DP_DatumRacuna_SelectedDateChanged"></DatePicker>
+                <StackPanel Grid.Row="2" Grid.Column="1">
+                    <DatePicker Name="DP_DatumRacuna" Width="150" Height="25" Margin="10" SelectedDateChanged="DP_DatumRacuna_SelectedDateChanged"></DatePicker>
+                    <Button Name="Button_ResetujDatum" Style="{StaticResource ModernButton}" Height="34" Width="150" Click="Button_ResetujDatum_Click" Visibility="Hidden">Resetuj datum</Button>
+                </StackPanel>
+                
                 <Button x:Name="Button_PretraziRacun" Grid.Column="2" Style="{StaticResource ModernButton}" Click="Button_PretraziRacun_Click">Prikazi sve</Button>
                 <Button x:Name="Button_RacunUPdf" Grid.Column="2" Grid.Row="1" Style="{StaticResource ModernButton}" Click="Button_RacunUPdf_Click">Izvezi u PDF</Button>
                 <StackPanel Grid.Column="2" Grid.Row="2">
@@ -36,7 +41,7 @@
 
             <StackPanel Orientation="Horizontal">
                
-                <DataGrid Style="{StaticResource ModernDataGrid}" x:Name="dataGridRacuni" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto" >
+                <DataGrid Style="{StaticResource ModernDataGrid}" Visibility="Hidden" x:Name="dataGridRacuni" SelectionChanged="dataGridRacuni_SelectionChanged" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID računa" Binding="{Binding RacunId}" />
                         <DataGridTextColumn Header="Datum" Binding="{Binding Datum}" />
