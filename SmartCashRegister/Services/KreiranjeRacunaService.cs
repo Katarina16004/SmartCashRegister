@@ -11,6 +11,7 @@ using System.Windows;
 
 using Microsoft.Data.SqlClient;
 using System.Collections.ObjectModel;
+using System.Collections;
 
 namespace SmartCashRegister.Services
 {
@@ -60,6 +61,11 @@ namespace SmartCashRegister.Services
         public List<StavkaRacuna> GetStavkeRacuna()
         {
             return stavkeRacuna;
+        }
+        public bool ObrisiProizvod(StavkaRacuna selektovanaStavka)
+        {
+            stavkeRacuna.Remove(selektovanaStavka);
+            return true;
         }
     }
 }

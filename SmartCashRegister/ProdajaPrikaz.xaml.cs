@@ -26,6 +26,7 @@ namespace SmartCashRegister
     public partial class ProdajaPrikaz : UserControl
     {
         private readonly IKreiranjeRacunaService _kreiranjeRacunaService;
+        private StavkaRacuna? selektovanaStavka;
         public ProdajaPrikaz(IKreiranjeRacunaService kreiranjeRacunaService)
         {
             InitializeComponent();
@@ -51,7 +52,17 @@ namespace SmartCashRegister
 
         private void Button_ObrisiProizvod_Click(object sender, RoutedEventArgs e)
         {
-
+            if(selektovanaStavka!=null)
+            {
+                if (_kreiranjeRacunaService.ObrisiProizvod(selektovanaStavka))
+                {
+                    MessageBox.Show("Uspesno obrisan proizvod");
+                    dataGridStavkeRacuna.ItemsSource = null;
+                    dataGridStavkeRacuna.ItemsSource = _kreiranjeRacunaService.GetStavkeRacuna();
+                }
+                    
+            }
+            
         }
 
         private void Button_KreirajRacun_Click(object sender, RoutedEventArgs e)
@@ -61,7 +72,8 @@ namespace SmartCashRegister
 
         private void dataGridStavkeRacuna_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dataGridStavkeRacuna.SelectedItem as StavkaRacuna != null)
+            selektovanaStavka = dataGridStavkeRacuna.SelectedItem as StavkaRacuna;
+            if (selektovanaStavka != null)
             {
                 Button_ObrisiProizvod.Visibility = Visibility.Visible;
             }
