@@ -24,5 +24,15 @@ namespace SmartCashRegister
         {
             InitializeComponent();
         }
+
+        private void Button_DodajProizvod_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_ObrisiProizvod_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

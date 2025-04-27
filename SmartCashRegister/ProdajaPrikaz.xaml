@@ -7,6 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Prodaja Sekcija" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label VerticalContentAlignment="Center" HorizontalAlignment="Center" FontWeight="DemiBold" >BarKod proizvoda:</Label>
+            <TextBox x:Name="TextBox_BarKodProizvoda" Style="{StaticResource ModernTextBox}" ></TextBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label VerticalContentAlignment="Center" HorizontalAlignment="Right" FontWeight="DemiBold" >Količina:</Label>
+                <TextBox x:Name="TextBox_KolicinaProizvoda" Grid.Column="1" Style="{StaticResource ModernTextBox}" Width="50" HorizontalAlignment="Left"></TextBox>
+            </Grid>
+            <Button x:Name="Button_DodajProizvod" Style="{StaticResource ModernButton}" Click="Button_DodajProizvod_Click" >Dodaj stavku na račun</Button>
+            <Button x:Name="Button_ObrisiProizvod" Style="{StaticResource ModernButton}" Click="Button_ObrisiProizvod_Click" Visibility="Hidden" >Obrisi proizvod sa računa</Button>
+            <Button x:Name="Button_KreirajRacun" Style="{StaticResource ModernButton}" Margin="30">Kreiraj račun</Button>
+        </StackPanel>
+        <DataGrid  Style="{StaticResource ModernDataGrid}" Grid.Column="1" x:Name="dataGridStavkeRacuna" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID proizvoda" Binding="{Binding ProizvodId}" />
+                <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" />
+                <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" />
+                <DataGridTextColumn Header="Količina" Binding="{Binding Kolicina}" />
+                <DataGridTextColumn Header="Ukupna cena" Binding="{Binding Ukupno}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
