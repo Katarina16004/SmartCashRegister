@@ -13,5 +13,6 @@ namespace SmartCashRegister.Services.Interfaces
         public bool DodajProizvod(string barkod,string kol);
         public List<StavkaRacuna> GetStavkeRacuna();
         public bool ObrisiProizvod(StavkaRacuna selektovanaStavka);
+        public bool KreirajRacun(int osobaId);
     }
 }

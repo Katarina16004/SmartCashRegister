@@ -67,5 +67,66 @@ namespace SmartCashRegister.Services
             stavkeRacuna.Remove(selektovanaStavka);
             return true;
         }
+        public bool KreirajRacun(int osobaId)
+        {
+            if (stavkeRacuna.Count == 0)
+            {
+                MessageBox.Show("Nema stavki na računu");
+                return false;
+            }
+
+            decimal ukupnaCena = 0;
+            foreach (StavkaRacuna s in stavkeRacuna)
+            {
+                ukupnaCena += s.Ukupno; // sabiranje ukupne cene
+            }
+
+            string query = @"
+                INSERT INTO Racun (datum, cena, osoba_id, status) 
+                VALUES (@Datum, @Cena, @OsobaId, @Status);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Datum", DateTime.Now),
+                new SqlParameter("@Cena", ukupnaCena),
+                new SqlParameter("@OsobaId", osobaId),
+                new SqlParameter("@Status", "Aktivan")
+            };
+
+            DataTable result = _dbPristup.ExecuteQuery(query, parameters.ToArray());
+
+            if (result.Rows.Count == 0)
+            {
+                MessageBox.Show("Greška pri kreiranju računa");
+                return false;
+            }
+
+            int racunId = Convert.ToInt32(result.Rows[0][0]);
+
+            foreach (var stavka in stavkeRacuna)
+            {
+                string stavkaQuery = @"
+                    INSERT INTO StavkaRacuna (racun_id, proizvod_id, kolicina, cena) 
+                    VALUES (@RacunId, @ProizvodId, @Kolicina, @Cena);";
+
+                var stavkaParameters = new List<SqlParameter>
+                {
+                    new SqlParameter("@RacunId", racunId),
+                    new SqlParameter("@ProizvodId", stavka.ProizvodId),
+                    new SqlParameter("@Kolicina", stavka.Kolicina),
+                    new SqlParameter("@Cena", stavka.Cena)
+                };
+
+                _dbPristup.ExecuteNonQuery(stavkaQuery, stavkaParameters.ToArray());
+            }
+
+            MessageBox.Show($"Račun uspešno kreiran! ID računa: {racunId}\nCena: {ukupnaCena}");
+
+            stavkeRacuna.Clear();
+            return true;
+        }
+
+
     }
 }

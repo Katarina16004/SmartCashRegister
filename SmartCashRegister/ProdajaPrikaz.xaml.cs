@@ -27,10 +27,12 @@ namespace SmartCashRegister
     {
         private readonly IKreiranjeRacunaService _kreiranjeRacunaService;
         private StavkaRacuna? selektovanaStavka;
-        public ProdajaPrikaz(IKreiranjeRacunaService kreiranjeRacunaService)
+        private Osoba prijavljeni;
+        public ProdajaPrikaz(IKreiranjeRacunaService kreiranjeRacunaService,Osoba prijavljeni)
         {
             InitializeComponent();
             _kreiranjeRacunaService=kreiranjeRacunaService;
+            this.prijavljeni = prijavljeni;
         }
 
         private void Button_DodajProizvod_Click(object sender, RoutedEventArgs e)
@@ -60,14 +62,15 @@ namespace SmartCashRegister
                     dataGridStavkeRacuna.ItemsSource = null;
                     dataGridStavkeRacuna.ItemsSource = _kreiranjeRacunaService.GetStavkeRacuna();
                 }
-                    
             }
-            
         }
 
         private void Button_KreirajRacun_Click(object sender, RoutedEventArgs e)
         {
-
+            if(_kreiranjeRacunaService.KreirajRacun(prijavljeni.OsobaId))
+            {
+                dataGridStavkeRacuna.ItemsSource = null; //za novi racun
+            }
         }
 
         private void dataGridStavkeRacuna_SelectionChanged(object sender, SelectionChangedEventArgs e)
