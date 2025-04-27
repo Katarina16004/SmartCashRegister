@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using SmartCashRegister.Models;
+using SmartCashRegister.Services.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+
 using System.Windows.Shapes;
 
 namespace SmartCashRegister
@@ -20,19 +25,49 @@ namespace SmartCashRegister
     /// </summary>
     public partial class ProdajaPrikaz : UserControl
     {
-        public ProdajaPrikaz()
+        private readonly IKreiranjeRacunaService _kreiranjeRacunaService;
+        public ProdajaPrikaz(IKreiranjeRacunaService kreiranjeRacunaService)
         {
             InitializeComponent();
+            _kreiranjeRacunaService=kreiranjeRacunaService;
         }
 
         private void Button_DodajProizvod_Click(object sender, RoutedEventArgs e)
         {
-
+            if(TextBox_BarKodProizvoda.Text.IsNullOrEmpty() || TextBox_KolicinaProizvoda.Text.IsNullOrEmpty())
+            {
+                MessageBox.Show("Morate uneti barkod i količinu");
+                return;
+            }
+            if (_kreiranjeRacunaService.DodajProizvod(TextBox_BarKodProizvoda.Text,TextBox_KolicinaProizvoda.Text))
+            {
+                MessageBox.Show("Uspesno dodat proizvod");
+                dataGridStavkeRacuna.ItemsSource = null;
+                dataGridStavkeRacuna.ItemsSource= _kreiranjeRacunaService.GetStavkeRacuna();
+                TextBox_BarKodProizvoda.Text = "";
+                TextBox_KolicinaProizvoda.Text = "";
+            }
         }
 
         private void Button_ObrisiProizvod_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        private void Button_KreirajRacun_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void dataGridStavkeRacuna_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dataGridStavkeRacuna.SelectedItem as StavkaRacuna != null)
+            {
+                Button_ObrisiProizvod.Visibility = Visibility.Visible;
+            }
+            else
+                Button_ObrisiProizvod.Visibility = Visibility.Hidden;
+        }
+
     }
 }

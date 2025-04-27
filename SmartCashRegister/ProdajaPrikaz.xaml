@@ -24,9 +24,9 @@
             </Grid>
             <Button x:Name="Button_DodajProizvod" Style="{StaticResource ModernButton}" Click="Button_DodajProizvod_Click" >Dodaj stavku na račun</Button>
             <Button x:Name="Button_ObrisiProizvod" Style="{StaticResource ModernButton}" Click="Button_ObrisiProizvod_Click" Visibility="Hidden" >Obrisi proizvod sa računa</Button>
-            <Button x:Name="Button_KreirajRacun" Style="{StaticResource ModernButton}" Margin="30">Kreiraj račun</Button>
+            <Button x:Name="Button_KreirajRacun" Style="{StaticResource ModernButton}" Margin="30" Click="Button_KreirajRacun_Click">Kreiraj račun</Button>
         </StackPanel>
-        <DataGrid  Style="{StaticResource ModernDataGrid}" Grid.Column="1" x:Name="dataGridStavkeRacuna" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto">
+        <DataGrid  Style="{StaticResource ModernDataGrid}" SelectionChanged="dataGridStavkeRacuna_SelectionChanged" Grid.Column="1" x:Name="dataGridStavkeRacuna" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"  Margin="10" VerticalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID proizvoda" Binding="{Binding ProizvodId}" />
                 <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" />

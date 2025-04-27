@@ -13,15 +13,17 @@ namespace SmartCashRegister.Models
         public decimal Cena { get; set; } = 0;
         public int OsobaId { get; set; }
         public Osoba Osoba { get; set; } = new Osoba();
+        public List<StavkaRacuna> stavke=new List<StavkaRacuna>();
         public Racun() { }
 
-        public Racun(int racunId, DateTime datum, decimal cena, int osobaId, Osoba osoba)
+        public Racun(int racunId, DateTime datum, decimal cena, int osobaId, Osoba osoba, List<StavkaRacuna> stavke)
         {
             RacunId = racunId;
             Datum = datum;
             Cena = cena;
             OsobaId = osobaId;
             Osoba = osoba;
+            this.stavke = stavke;
         }
 
         public override string? ToString()
