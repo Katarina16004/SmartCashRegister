@@ -81,7 +81,7 @@ namespace SmartCashRegister
 
         private void dataGridRacuni_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(dataGridRacuni.SelectedItem is Racun selektovaniRacun)
+            if (dataGridRacuni.SelectedItem is Racun selektovaniRacun)
             {
                 if (korisnik.Uloga == "administrator")
                     Button_ObrisiRacun.Visibility = Visibility.Visible;
@@ -89,8 +89,12 @@ namespace SmartCashRegister
                     Button_ObrisiRacun.Visibility = Visibility.Hidden;
 
                 var stavke = _pretragaRacunaService.PrikaziStavkeRacuna(selektovaniRacun.RacunId);
+                dataGridRacun.Visibility = Visibility.Visible;
+                dataGridRacun.ItemsSource = null;
                 dataGridRacun.ItemsSource = stavke;  //stavke izabranog racuna
             }
+            else
+                dataGridRacun.Visibility = Visibility.Hidden;
             
         }
     }
