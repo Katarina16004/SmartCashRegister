@@ -27,7 +27,8 @@ namespace SmartCashRegister.Services
                         RacunId = Convert.ToInt32(row["racun_id"]),
                         Datum = Convert.ToDateTime(row["datum"]),
                         Cena = Convert.ToDecimal(row["cena"]),
-                        OsobaId = Convert.ToInt32(row["osoba_id"])
+                        OsobaId = Convert.ToInt32(row["osoba_id"]),
+                        Status = row["status"].ToString()
                     };
                     svi.Add(racun);
                 }
@@ -71,7 +72,8 @@ namespace SmartCashRegister.Services
                         RacunId = Convert.ToInt32(row["racun_id"]),
                         Datum = Convert.ToDateTime(row["datum"]),
                         Cena = Convert.ToDecimal(row["cena"]),
-                        OsobaId = Convert.ToInt32(row["osoba_id"])
+                        OsobaId = Convert.ToInt32(row["osoba_id"]),
+                        Status = row["status"].ToString()
                     };
                     filtrirani.Add(racun);
                 }

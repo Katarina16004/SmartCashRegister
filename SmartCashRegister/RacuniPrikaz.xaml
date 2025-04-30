@@ -47,7 +47,17 @@
                         <DataGridTextColumn Header="Datum" Binding="{Binding Datum}" />
                         <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" />
                         <DataGridTextColumn Header="ID prodavca" Binding="{Binding OsobaId}"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
                     </DataGrid.Columns>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Status}" Value="Storniran">
+                                    <Setter Property="Background" Value="RosyBrown"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
                 </DataGrid>
                 <DataGrid  Style="{StaticResource ModernDataGrid}" Visibility="Hidden" x:Name="dataGridRacun" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}" Margin="10" VerticalScrollBarVisibility="Auto">
                     <DataGrid.Columns>
@@ -57,7 +67,10 @@
                         <DataGridTextColumn Header="Količina" Binding="{Binding Kolicina}" />
                         <DataGridTextColumn Header="Ukupna cena" Binding="{Binding Ukupno}" />
                     </DataGrid.Columns>
+
+                    
                 </DataGrid>
+                
             </StackPanel>
 
         </StackPanel>

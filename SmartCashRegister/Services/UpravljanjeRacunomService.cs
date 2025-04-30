@@ -72,5 +72,15 @@ namespace SmartCashRegister.Services
             }
             
         }
+        public bool StornirajRacun(Racun racun)
+        {
+            string query = $"UPDATE Racun SET status = 'Storniran' WHERE racun_id = {racun.RacunId} AND status LIKE 'Aktivan'";
+
+            int affected = _dbPristup.ExecuteNonQuery(query);
+
+            if (affected == 0) 
+                return false;
+            return true;
+        }
     }
 }

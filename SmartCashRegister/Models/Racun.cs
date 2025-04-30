@@ -12,6 +12,7 @@ namespace SmartCashRegister.Models
         public DateTime Datum { get; set; }
         public decimal Cena { get; set; } = 0;
         public int OsobaId { get; set; }
+        public string Status { get; set; } = "Aktivan";
         public Racun() { }
 
         public Racun(int racunId, DateTime datum, decimal cena, int osobaId, Osoba osoba)

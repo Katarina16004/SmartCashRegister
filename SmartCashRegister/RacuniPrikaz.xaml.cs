@@ -72,7 +72,16 @@ namespace SmartCashRegister
 
         private void Button_Storniraj_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            var racun = (Racun)dataGridRacuni.SelectedItem;
+            if (racun != null)
+            {
+                if (_upravljanjeRacunomService.StornirajRacun(racun))
+                {
+                    MessageBox.Show("Uspešno storniran račun");
+                }
+                else
+                    MessageBox.Show("Greška pri storniranju računa");
+            }
         }
 
         private void Button_ObrisiRacun_Click(object sender, System.Windows.RoutedEventArgs e)
