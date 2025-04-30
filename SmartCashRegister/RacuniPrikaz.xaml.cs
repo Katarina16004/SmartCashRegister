@@ -12,10 +12,12 @@ namespace SmartCashRegister
     public partial class RacuniPrikaz : UserControl
     {
         private readonly IPretragaRacunaService _pretragaRacunaService;
+        private readonly IUpravljanjeRacunomService _upravljanjeRacunomService;
         private Osoba korisnik;
-        public RacuniPrikaz(IPretragaRacunaService pretragaRacunaService, Osoba prijavljeni)
+        public RacuniPrikaz(IPretragaRacunaService pretragaRacunaService, Osoba prijavljeni, IUpravljanjeRacunomService upravljanjeRacunomService)
         {
             _pretragaRacunaService=pretragaRacunaService;
+            _upravljanjeRacunomService = upravljanjeRacunomService;
             
             InitializeComponent();
             korisnik = prijavljeni;
@@ -61,7 +63,11 @@ namespace SmartCashRegister
 
         private void Button_RacunUPdf_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            var racun = (Racun)dataGridRacuni.SelectedItem;
+            if (racun != null)
+            {
+                _upravljanjeRacunomService.IzveziUPDF(racun);
+            }
         }
 
         private void Button_Storniraj_Click(object sender, System.Windows.RoutedEventArgs e)

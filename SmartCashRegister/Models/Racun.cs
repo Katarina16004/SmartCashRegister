@@ -12,24 +12,20 @@ namespace SmartCashRegister.Models
         public DateTime Datum { get; set; }
         public decimal Cena { get; set; } = 0;
         public int OsobaId { get; set; }
-        public Osoba Osoba { get; set; } = new Osoba();
-        public List<StavkaRacuna> stavke=new List<StavkaRacuna>();
         public Racun() { }
 
-        public Racun(int racunId, DateTime datum, decimal cena, int osobaId, Osoba osoba, List<StavkaRacuna> stavke)
+        public Racun(int racunId, DateTime datum, decimal cena, int osobaId, Osoba osoba)
         {
             RacunId = racunId;
             Datum = datum;
             Cena = cena;
             OsobaId = osobaId;
-            Osoba = osoba;
-            this.stavke = stavke;
         }
 
         public override string? ToString()
         {
             return "Racun: " + RacunId + "\nDatum: " + Datum.ToString("dd.MM.yyyy HH:mm") +
-           "\nCena: " + Cena.ToString("F2") + "\nIzdala osoba: " + Osoba?.ToString();
+           "\nCena: " + Cena.ToString("F2");
         }
     }
 }
