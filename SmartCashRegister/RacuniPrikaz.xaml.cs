@@ -78,6 +78,8 @@ namespace SmartCashRegister
                 if (_upravljanjeRacunomService.StornirajRacun(racun))
                 {
                     MessageBox.Show("Uspešno storniran račun");
+                    dataGridRacuni.Visibility = Visibility.Hidden;
+                    dataGridRacun.Visibility = Visibility.Hidden;
                 }
                 else
                     MessageBox.Show("Greška pri storniranju računa");
@@ -86,7 +88,17 @@ namespace SmartCashRegister
 
         private void Button_ObrisiRacun_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            
+            var racun = (Racun)dataGridRacuni.SelectedItem;
+            if (racun != null)
+            {
+                if (!_upravljanjeRacunomService.ObrisiRacun(racun))
+                    MessageBox.Show("Greška pri brisanju računa");
+                else
+                {
+                    dataGridRacuni.Visibility = Visibility.Hidden;
+                    dataGridRacun.Visibility = Visibility.Hidden;
+                }
+            }
         }
 
         private void Button_ResetujDatum_Click(object sender, System.Windows.RoutedEventArgs e)

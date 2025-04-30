@@ -6,5 +6,6 @@ namespace SmartCashRegister.Services.Interfaces
     {
         public bool IzveziUPDF(Racun racun);
         public bool StornirajRacun(Racun racun);
+        public bool ObrisiRacun(Racun racun);
     }
 }

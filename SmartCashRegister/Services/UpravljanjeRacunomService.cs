@@ -5,6 +5,7 @@ using SmartCashRegister.Services.Interfaces;
 using System.IO;
 using System.Windows;
 using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace SmartCashRegister.Services
 {
@@ -80,6 +81,23 @@ namespace SmartCashRegister.Services
 
             if (affected == 0) 
                 return false;
+            return true;
+        }
+        public bool ObrisiRacun(Racun racun)
+        {
+            string stavkaQuery = "DELETE FROM StavkaRacuna WHERE racun_id = @racunId";
+            SqlParameter[] parameters = {
+                new SqlParameter("@racunId", racun.RacunId)
+            };
+            _dbPristup.ExecuteNonQuery(stavkaQuery, parameters);
+
+            SqlParameter[] parametersR = {
+                new SqlParameter("@racunId", racun.RacunId)
+            };
+            string racunQuery = "DELETE FROM Racun WHERE racun_id = @racunId";
+            _dbPristup.ExecuteNonQuery(racunQuery, parametersR);
+
+            MessageBox.Show($"Račun sa ID: {racun.RacunId} uspešno obrisan.");
             return true;
         }
     }
