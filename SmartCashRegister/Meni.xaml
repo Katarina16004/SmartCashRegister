@@ -25,7 +25,7 @@
                     <Button x:Name="ButtonProdaja" Content="Prodaja" Style="{StaticResource ModernButton}" Click="ButtonProdaja_Click" Margin="0,30,0,10"/>
                     <Button x:Name="ButtonRacuni" Content="Računi" Style="{StaticResource ModernButton}" Click="ButtonRacuni_Click"/>
                     <Button x:Name="ButtonProizvodi" Content="Proizvodi" Style="{StaticResource ModernButton}" Click="ButtonProizvodi_Click" />
-                    <Button x:Name="ButtonPodesavanjaProfila" Content="Podesavanja profila" Style="{StaticResource ModernButton}"/>
+                    <Button x:Name="ButtonPodesavanjaProfila" Content="Podesavanja profila" Style="{StaticResource ModernButton}" Click="ButtonPodesavanjaProfila_Click"/>
                     <Button x:Name="ButtonUrediZaposlene" Content="Uredi zaposlene" Style="{StaticResource ModernButton}" Visibility="Hidden"/>
                     <Button x:Name="ButtonUrediProizvode" Content="Uredi proizvode" Style="{StaticResource ModernButton}" Visibility="Hidden"/>
                     <Button x:Name="ButtonUrediKategorije" Content="Uredi kategorije" Style="{StaticResource ModernButton}" Visibility="Hidden"/>

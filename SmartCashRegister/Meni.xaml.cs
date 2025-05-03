@@ -72,7 +72,7 @@ namespace SmartCashRegister
         }
         private void AktivanButton(Button trenutni)
         {
-            Button[] buttons = { ButtonProdaja, ButtonRacuni, ButtonProizvodi, ButtonPodesavanjaProfila };
+            Button[] buttons = { ButtonProdaja, ButtonRacuni, ButtonProizvodi, ButtonPodesavanjaProfila, ButtonUrediZaposlene, ButtonUrediProizvode, ButtonUrediKategorije };
             foreach (var button in buttons)
             {
                 if (button == trenutni)
@@ -80,6 +80,12 @@ namespace SmartCashRegister
                 else
                     button.Style = (Style)FindResource("ModernButton");
             }
+        }
+
+        private void ButtonPodesavanjaProfila_Click(object sender, RoutedEventArgs e)
+        {
+            AktivanButton(ButtonPodesavanjaProfila);
+            MainContent.Content = new PodesavanjeProfila();
         }
     }
 }
