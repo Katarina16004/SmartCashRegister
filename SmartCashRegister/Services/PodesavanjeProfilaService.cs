@@ -62,6 +62,14 @@ namespace SmartCashRegister.Services.Interfaces
         }
         public bool PromeniLozinku(int prijavljeniId, string novaLozinka)
         {
+            string query = $"UPDATE Osoba SET sifra='{novaLozinka}' WHERE osoba_id = {prijavljeniId}";
+            int affected = _dbPristup.ExecuteNonQuery(query);
+
+            if (affected == 0)
+            {
+                MessageBox.Show("Greška pri izmeni lozinke");
+                return false;
+            }
             return true;
         }
     }

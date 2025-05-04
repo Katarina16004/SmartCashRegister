@@ -23,6 +23,7 @@ namespace SmartCashRegister
         private string? poslednjeSacuvanoPrezime;
         private string? poslednjiSacuvanTelefon;
         private string? poslednjiSacuvanUsername;
+        private string? poslednjaSacuvanaLozinka;
         public PodesavanjeProfila(Osoba prijavljeni, IPristupBaziService dbPristup, IPodesavanjeProfilaService podesavanjeProfilaService)
         {
             InitializeComponent();
@@ -43,7 +44,7 @@ namespace SmartCashRegister
                 poslednjeSacuvanoPrezime=txtPrezime.Text = row["prezime"].ToString();
                 poslednjiSacuvanTelefon=txtTelefon.Text = row["telefon"].ToString();
                 poslednjiSacuvanUsername=txtUsername.Text = row["username"].ToString();
-                PasswordBox.Password = row["sifra"].ToString();
+                poslednjaSacuvanaLozinka=PasswordBox.Password = row["sifra"].ToString();
                 PasswordTextBox.Text = PasswordBox.Password;
             }
             return true;
@@ -104,17 +105,17 @@ namespace SmartCashRegister
                 promenjeno = promenjeno + " telefon,";
                 poslednjiSacuvanTelefon = txtTelefon.Text;
             }
-            if (poslednjiSacuvanTelefon != txtTelefon.Text)
-            {
-                _podesavanjeProfilaService.PromeniTelefon(prijavljeni.OsobaId, txtTelefon.Text);
-                promenjeno = promenjeno + " telefon,";
-                poslednjiSacuvanTelefon = txtTelefon.Text;
-            }
             if (poslednjiSacuvanUsername != txtUsername.Text)
             {
                 _podesavanjeProfilaService.PromeniUsername(prijavljeni.OsobaId, txtUsername.Text);
                 promenjeno = promenjeno + " username,";
                 poslednjiSacuvanUsername = txtUsername.Text;
+            }
+            if (poslednjaSacuvanaLozinka != PasswordTextBox.Text)
+            {
+                _podesavanjeProfilaService.PromeniLozinku(prijavljeni.OsobaId, PasswordTextBox.Text);
+                promenjeno = promenjeno + " lozinku,";
+                poslednjaSacuvanaLozinka = PasswordTextBox.Text;
             }
 
             if (promenjeno!="")
