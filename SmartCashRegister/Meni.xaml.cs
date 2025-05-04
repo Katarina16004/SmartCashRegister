@@ -85,7 +85,7 @@ namespace SmartCashRegister
         private void ButtonPodesavanjaProfila_Click(object sender, RoutedEventArgs e)
         {
             AktivanButton(ButtonPodesavanjaProfila);
-            MainContent.Content = new PodesavanjeProfila();
+            MainContent.Content = new PodesavanjeProfila(prijavljeni,dbPristup);
         }
     }
 }
