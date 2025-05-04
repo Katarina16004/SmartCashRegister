@@ -17,11 +17,14 @@ namespace SmartCashRegister
     {
         private bool vidljivostLozinke = false;
         Osoba prijavljeni;
+        private readonly IPodesavanjeProfilaService _podesavanjeProfilaService;
         private readonly IPristupBaziService _dbPristup;
-        public PodesavanjeProfila(Osoba prijavljeni, IPristupBaziService dbPristup)
+        private string? poslednjeSacuvanoIme;
+        public PodesavanjeProfila(Osoba prijavljeni, IPristupBaziService dbPristup, IPodesavanjeProfilaService podesavanjeProfilaService)
         {
             InitializeComponent();
             _dbPristup = dbPristup;
+            _podesavanjeProfilaService = podesavanjeProfilaService;
             EyeIcon.Visibility = Visibility.Collapsed;
             this.prijavljeni= prijavljeni;
             PrikaziTrenutnePodatke();
@@ -33,7 +36,7 @@ namespace SmartCashRegister
             if (dt.Rows.Count > 0)
             {
                 DataRow row = dt.Rows[0];
-                txtIme.Text = row["ime"].ToString();
+                poslednjeSacuvanoIme=txtIme.Text = row["ime"].ToString();
                 txtPrezime.Text = row["prezime"].ToString();
                 txtTelefon.Text = row["telefon"].ToString();
                 txtUsername.Text = row["username"].ToString();
@@ -75,6 +78,12 @@ namespace SmartCashRegister
         private void PasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             PasswordBox.Password=PasswordTextBox.Text;
+        }
+
+        private void btnSacuvaj_Click(object sender, RoutedEventArgs e)
+        {
+            if (poslednjeSacuvanoIme != txtIme.Text)
+                _podesavanjeProfilaService.PromeniIme(prijavljeni.OsobaId, txtIme.Text);
         }
     }
 }

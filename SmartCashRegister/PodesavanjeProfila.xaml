@@ -45,7 +45,7 @@
                 <Image x:Name="EyeIcon" Source="Resources/otvoreno_oko.png" Width="40" Height="40" Grid.Column="1" MouseDown="EyeIcon_MouseDown"/>
             </Grid>
 
-            <Button x:Name="btnSacuvaj" Grid.Row="5" Grid.ColumnSpan="2" Content="Sačuvaj izmene" Style="{StaticResource ModernButton}" Margin="0,40,0,0" HorizontalAlignment="Center"/>
+            <Button x:Name="btnSacuvaj" Grid.Row="5" Grid.ColumnSpan="2" Content="Sačuvaj izmene" Style="{StaticResource ModernButton}" Margin="0,40,0,0" HorizontalAlignment="Center" Click="btnSacuvaj_Click"/>
         </Grid>
     </StackPanel>
 </UserControl>

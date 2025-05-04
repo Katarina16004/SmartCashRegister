@@ -1,5 +1,6 @@
 ﻿using SmartCashRegister.Models;
 using SmartCashRegister.Services;
+using SmartCashRegister.Services.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,6 +18,7 @@ namespace SmartCashRegister
         private PretragaRacunaService pretragaRacunaService;
         private KreiranjeRacunaService kreiranjeRacunaService;
         private UpravljanjeRacunomService upravljanjeRacunomService;
+        private PodesavanjeProfilaService podesavanjeProfilaService;
         public Meni(Osoba prijavljeni)
         {
             InitializeComponent();
@@ -41,6 +43,7 @@ namespace SmartCashRegister
             prikazKategorijaService = new PrikazKategorijaService(dbPristup);
             pretragaRacunaService= new PretragaRacunaService(dbPristup);
             upravljanjeRacunomService = new UpravljanjeRacunomService(dbPristup, pretragaRacunaService);
+            podesavanjeProfilaService=new PodesavanjeProfilaService(dbPristup);
         }
 
         private void ButtonProdaja_Click(object sender, RoutedEventArgs e)
@@ -85,7 +88,7 @@ namespace SmartCashRegister
         private void ButtonPodesavanjaProfila_Click(object sender, RoutedEventArgs e)
         {
             AktivanButton(ButtonPodesavanjaProfila);
-            MainContent.Content = new PodesavanjeProfila(prijavljeni,dbPristup);
+            MainContent.Content = new PodesavanjeProfila(prijavljeni,dbPristup,podesavanjeProfilaService);
         }
     }
 }
