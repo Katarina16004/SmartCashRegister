@@ -49,6 +49,15 @@ namespace SmartCashRegister.Services.Interfaces
         }
         public bool PromeniUsername(int prijavljeniId, string noviUsername)
         {
+
+            string query = $"UPDATE Osoba SET username='{noviUsername}' WHERE osoba_id = {prijavljeniId}";
+            int affected = _dbPristup.ExecuteNonQuery(query);
+
+            if (affected == 0)
+            {
+                MessageBox.Show("Greška pri izmeni username-a");
+                return false;
+            }
             return true;
         }
         public bool PromeniLozinku(int prijavljeniId, string novaLozinka)
