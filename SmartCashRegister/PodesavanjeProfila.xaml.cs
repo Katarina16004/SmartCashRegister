@@ -21,6 +21,7 @@ namespace SmartCashRegister
         private readonly IPristupBaziService _dbPristup;
         private string? poslednjeSacuvanoIme;
         private string? poslednjeSacuvanoPrezime;
+        private string? poslednjiSacuvanTelefon;
         public PodesavanjeProfila(Osoba prijavljeni, IPristupBaziService dbPristup, IPodesavanjeProfilaService podesavanjeProfilaService)
         {
             InitializeComponent();
@@ -39,7 +40,7 @@ namespace SmartCashRegister
                 DataRow row = dt.Rows[0];
                 poslednjeSacuvanoIme=txtIme.Text = row["ime"].ToString();
                 poslednjeSacuvanoPrezime=txtPrezime.Text = row["prezime"].ToString();
-                txtTelefon.Text = row["telefon"].ToString();
+                poslednjiSacuvanTelefon=txtTelefon.Text = row["telefon"].ToString();
                 txtUsername.Text = row["username"].ToString();
                 PasswordBox.Password = row["sifra"].ToString();
                 PasswordTextBox.Text = PasswordBox.Password;
@@ -95,10 +96,15 @@ namespace SmartCashRegister
                 _podesavanjeProfilaService.PromeniPrezime(prijavljeni.OsobaId, txtPrezime.Text);
                 promenjeno = promenjeno + " prezime,";
                 poslednjeSacuvanoPrezime = txtPrezime.Text;
-                
             }
-            
-            if(promenjeno!="")
+            if (poslednjiSacuvanTelefon != txtTelefon.Text)
+            {
+                _podesavanjeProfilaService.PromeniTelefon(prijavljeni.OsobaId, txtTelefon.Text);
+                promenjeno = promenjeno + " telefon,";
+                poslednjiSacuvanTelefon = txtTelefon.Text;
+            }
+
+            if (promenjeno!="")
             {
                 promenjeno=promenjeno.Substring(0,promenjeno.Length-1);
                 MessageBox.Show("Uspesno ste promenili" + promenjeno);

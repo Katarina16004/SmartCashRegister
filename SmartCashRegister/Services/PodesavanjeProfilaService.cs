@@ -37,6 +37,14 @@ namespace SmartCashRegister.Services.Interfaces
         }
         public bool PromeniTelefon(int prijavljeniId, string noviTelefon)
         {
+            string query = $"UPDATE Osoba SET telefon='{noviTelefon}' WHERE osoba_id = {prijavljeniId}";
+            int affected = _dbPristup.ExecuteNonQuery(query);
+
+            if (affected == 0)
+            {
+                MessageBox.Show("Greška pri izmeni telefona");
+                return false;
+            }
             return true;
         }
         public bool PromeniUsername(int prijavljeniId, string noviUsername)
