@@ -13,61 +13,38 @@ namespace SmartCashRegister.Services.Interfaces
         }
         public bool PromeniIme(int prijavljeniId, string novoIme)
         {
-            string query = $"UPDATE Osoba SET ime='{novoIme}' WHERE osoba_id = {prijavljeniId}";
-            int affected = _dbPristup.ExecuteNonQuery(query);
-
-            if (affected == 0)
-            {
-                MessageBox.Show("Greška pri izmeni imena");
-                return false;
-            }
-            return true;
+            return IzmeniPolje("ime", novoIme, prijavljeniId, "imena");
         }
+
         public bool PromeniPrezime(int prijavljeniId, string novoPrezime)
         {
-            string query = $"UPDATE Osoba SET prezime='{novoPrezime}' WHERE osoba_id = {prijavljeniId}";
-            int affected = _dbPristup.ExecuteNonQuery(query);
-
-            if (affected == 0)
-            {
-                MessageBox.Show("Greška pri izmeni prezimena");
-                return false;
-            }
-            return true;
+            return IzmeniPolje("prezime", novoPrezime, prijavljeniId, "prezimena");
         }
+
         public bool PromeniTelefon(int prijavljeniId, string noviTelefon)
         {
-            string query = $"UPDATE Osoba SET telefon='{noviTelefon}' WHERE osoba_id = {prijavljeniId}";
-            int affected = _dbPristup.ExecuteNonQuery(query);
-
-            if (affected == 0)
-            {
-                MessageBox.Show("Greška pri izmeni telefona");
-                return false;
-            }
-            return true;
+            return IzmeniPolje("telefon", noviTelefon, prijavljeniId, "telefona");
         }
+
         public bool PromeniUsername(int prijavljeniId, string noviUsername)
         {
-
-            string query = $"UPDATE Osoba SET username='{noviUsername}' WHERE osoba_id = {prijavljeniId}";
-            int affected = _dbPristup.ExecuteNonQuery(query);
-
-            if (affected == 0)
-            {
-                MessageBox.Show("Greška pri izmeni username-a");
-                return false;
-            }
-            return true;
+            return IzmeniPolje("username", noviUsername, prijavljeniId, "username-a");
         }
+
         public bool PromeniLozinku(int prijavljeniId, string novaLozinka)
         {
-            string query = $"UPDATE Osoba SET sifra='{novaLozinka}' WHERE osoba_id = {prijavljeniId}";
-            int affected = _dbPristup.ExecuteNonQuery(query);
+            return IzmeniPolje("sifra", novaLozinka, prijavljeniId, "lozinke");
+        }
 
-            if (affected == 0)
+        private bool IzmeniPolje(string nazivKolone, string novaVrednost, int osobaId, string nazivPoljaZaPrikaz)
+        {
+            string query = $"UPDATE Osoba SET {nazivKolone} = '{novaVrednost}' WHERE osoba_id = {osobaId}";
+
+            int rezultat = _dbPristup.ExecuteNonQuery(query);
+
+            if (rezultat == 0)
             {
-                MessageBox.Show("Greška pri izmeni lozinke");
+                MessageBox.Show("Greška pri izmeni " + nazivPoljaZaPrikaz);
                 return false;
             }
             return true;
