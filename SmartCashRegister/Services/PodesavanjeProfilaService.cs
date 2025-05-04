@@ -13,7 +13,7 @@ namespace SmartCashRegister.Services.Interfaces
         }
         public bool PromeniIme(int prijavljeniId, string novoIme)
         {
-            string query = $"UPDATE Osoba SET ime='{novoIme}' WHERE osoba_id = {prijavljeniId} AND ime NOT LIKE '{novoIme}'";
+            string query = $"UPDATE Osoba SET ime='{novoIme}' WHERE osoba_id = {prijavljeniId}";
             int affected = _dbPristup.ExecuteNonQuery(query);
 
             if (affected == 0)
@@ -21,11 +21,18 @@ namespace SmartCashRegister.Services.Interfaces
                 MessageBox.Show("Greška pri izmeni imena");
                 return false;
             }
-            MessageBox.Show("Uspešno ste promenili ime");
             return true;
         }
         public bool PromeniPrezime(int prijavljeniId, string novoPrezime)
         {
+            string query = $"UPDATE Osoba SET prezime='{novoPrezime}' WHERE osoba_id = {prijavljeniId}";
+            int affected = _dbPristup.ExecuteNonQuery(query);
+
+            if (affected == 0)
+            {
+                MessageBox.Show("Greška pri izmeni prezimena");
+                return false;
+            }
             return true;
         }
         public bool PromeniTelefon(int prijavljeniId, string noviTelefon)
