@@ -96,7 +96,7 @@ namespace SmartCashRegister
         private void ButtonUrediZaposlene_Click(object sender, RoutedEventArgs e)
         {
             AktivanButton(ButtonUrediZaposlene);
-            MainContent.Content = new UrediZaposlene(uredjivanjeZaposlenihService);
+            MainContent.Content = new UrediZaposlene(uredjivanjeZaposlenihService,dbPristup);
         }
     }
 }

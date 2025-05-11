@@ -2,6 +2,7 @@
 using SmartCashRegister.Services.Interfaces;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using System.Windows.Controls;
 
 namespace SmartCashRegister.Services
 {
@@ -84,5 +85,6 @@ namespace SmartCashRegister.Services
             }
             return filtrirani;
         }
+        
     }
 }

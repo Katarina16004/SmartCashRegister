@@ -32,7 +32,7 @@
                 <Button x:Name="Button_Pretrazi" Grid.Column="2" Grid.RowSpan="3" Content="Prikaži sve" Style="{StaticResource ModernButton}" Click="Button_Pretrazi_Click" />
             </Grid>
 
-            <DataGrid x:Name="DataGrid_Zaposleni" Visibility="Hidden" Style="{StaticResource ModernDataGrid}" AutoGenerateColumns="False" IsReadOnly="True" Height="130" VerticalScrollBarVisibility="Auto" CanUserAddRows="False" Margin="10">
+            <DataGrid x:Name="DataGrid_Zaposleni" Visibility="Hidden" SelectionChanged="DataGrid_Zaposleni_SelectionChanged" Style="{StaticResource ModernDataGrid}" AutoGenerateColumns="False" IsReadOnly="True" Height="130" VerticalScrollBarVisibility="Auto" CanUserAddRows="False" Margin="10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding OsobaId}" Width="Auto"/>
                     <DataGridTextColumn Header="Ime" Binding="{Binding Ime}" Width="*"/>
@@ -83,7 +83,7 @@
                     </Grid.ColumnDefinitions>
                     <PasswordBox x:Name="PasswordBox" Style="{StaticResource ModernPasswordBox}" Width="250" HorizontalAlignment="Left" />
                     <TextBox x:Name="PasswordTextBox" Style="{StaticResource ModernTextBox}" Visibility="Collapsed" Width="250" HorizontalAlignment="Left"/>
-                    <Image x:Name="EyeIcon" Source="Resources/otvoreno_oko.png" Width="40" Height="40" Grid.Column="1"/>
+                    <Image x:Name="EyeIcon" Source="Resources/otvoreno_oko.png" Width="40" Height="40" Grid.Column="1" MouseDown="EyeIcon_MouseDown"/>
                 </Grid>
 
                 <Label Content="Uloga:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" />
@@ -94,8 +94,8 @@
 
                 <StackPanel Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
                     <Button x:Name="Button_Dodaj" Content="Dodaj zaposlenog" Margin="0,0,0,10" Style="{StaticResource ModernButton}" Background="LightGreen"/>
-                    <Button x:Name="Button_Izmeni" Content="Sačuvaj promene" Margin="0,0,0,10" Style="{StaticResource ModernButton}" Background="Khaki"/>
-                    <Button x:Name="Button_Obrisi" Content="Obriši zaposlenog" Style="{StaticResource ModernButton}" Background="Salmon"/>
+                    <Button x:Name="Button_Izmeni" Content="Sačuvaj promene" Margin="0,0,0,10" Style="{StaticResource ModernButton}" Background="Khaki" Visibility="Hidden"/>
+                    <Button x:Name="Button_Obrisi" Content="Obriši zaposlenog" Style="{StaticResource ModernButton}" Background="Salmon" Visibility="Hidden"/>
                 </StackPanel>
             </Grid>
 
