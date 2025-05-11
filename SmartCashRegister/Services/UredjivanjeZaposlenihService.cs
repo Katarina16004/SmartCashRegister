@@ -101,12 +101,17 @@ namespace SmartCashRegister.Services
 
             return rezultat > 0;
         }
-        private bool DaLiPostojiJmbgIliUsername(string jmbg, string username)
+        private bool DaLiPostojiJmbgIliUsername(string? jmbg, string? username)
         {
             string query = $"SELECT * FROM Osoba WHERE jmbg = '{jmbg}' OR username = '{username}'";
             DataTable dt = _dbPristup.ExecuteQuery(query);
 
             return dt.Rows.Count > 0;
+        }
+        public bool ObrisiZaposlenog(int osobaId)
+        {
+            string query = $"DELETE FROM Osoba WHERE osoba_id = {osobaId}";
+            return _dbPristup.ExecuteNonQuery(query) > 0;
         }
     }
 }

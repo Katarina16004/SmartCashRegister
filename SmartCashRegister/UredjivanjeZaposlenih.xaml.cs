@@ -181,5 +181,25 @@ namespace SmartCashRegister
             else
                 EyeIcon.Visibility = Visibility.Visible;
         }
+
+        private void Button_Obrisi_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid_Zaposleni.SelectedItem is Osoba selektovanaOsoba)
+            {
+                var potvrda = MessageBox.Show("Da li ste sigurni da želite da obrišete zaposlenog?", "Potvrda", MessageBoxButton.YesNo);
+                if (potvrda != MessageBoxResult.Yes) return;
+
+                bool uspeh = _uredjivanjeZaposlenihService.ObrisiZaposlenog(selektovanaOsoba.OsobaId);
+
+                if (uspeh)
+                {
+                    MessageBox.Show("Zaposleni je obrisan");
+                    OsveziDataGrid();
+                    OcistiPolja();
+                }
+            }
+
+            
+        }
     }
 }

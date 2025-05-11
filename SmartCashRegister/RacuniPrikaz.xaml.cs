@@ -91,6 +91,9 @@ namespace SmartCashRegister
             var racun = (Racun)dataGridRacuni.SelectedItem;
             if (racun != null)
             {
+                var potvrda = MessageBox.Show("Da li ste sigurni da želite da obrišete račun?", "Potvrda", MessageBoxButton.YesNo);
+                if (potvrda != MessageBoxResult.Yes) return;
+
                 if (!_upravljanjeRacunomService.ObrisiRacun(racun))
                     MessageBox.Show("Greška pri brisanju računa");
                 else
