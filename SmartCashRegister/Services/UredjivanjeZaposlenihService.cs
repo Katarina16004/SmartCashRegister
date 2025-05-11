@@ -1,11 +1,7 @@
 ﻿using SmartCashRegister.Models;
 using SmartCashRegister.Services.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace SmartCashRegister.Services
 {
@@ -40,6 +36,53 @@ namespace SmartCashRegister.Services
                 }
             }
             return svi;
+        }
+        public IEnumerable<Osoba> PretraziZaposlenog(string ime = "", string prezime = "", string username = "")
+        {
+            List<Osoba> filtrirani = new List<Osoba>();
+            string query = "SELECT * FROM Osoba " +
+                           "WHERE 1 = 1";
+            List<SqlParameter> parameters = new List<SqlParameter>();
+
+            if (!string.IsNullOrEmpty(ime))
+            {
+                query = query + " AND ime LIKE @Ime";
+                parameters.Add(new SqlParameter("@Ime", "%" + ime + "%"));
+            }
+
+            if (!string.IsNullOrEmpty(prezime))
+            {
+                query = query + " AND prezime LIKE @Prezime";
+                parameters.Add(new SqlParameter("@Prezime", "%" + prezime + "%"));
+            }
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                query = query + " AND username LIKE @Username";
+                parameters.Add(new SqlParameter("@Username", "%" + username + "%"));
+            }
+
+            DataTable result = _dbPristup.ExecuteQuery(query, parameters.ToArray());
+
+            if (result.Rows.Count > 0)
+            {
+                foreach (DataRow row in result.Rows)
+                {
+                    Osoba zaposleni = new Osoba
+                    {
+                        OsobaId = Convert.ToInt32(row["osoba_id"]),
+                        Ime = row["ime"].ToString(),
+                        Prezime = row["prezime"].ToString(),
+                        Jmbg = row["jmbg"].ToString(),
+                        Telefon = row["telefon"].ToString(),
+                        Username = row["username"].ToString(),
+                        Sifra = row["sifra"].ToString(),
+                        Uloga = row["uloga"].ToString()
+                    };
+                    filtrirani.Add(zaposleni);
+                }
+            }
+            return filtrirani;
         }
     }
 }

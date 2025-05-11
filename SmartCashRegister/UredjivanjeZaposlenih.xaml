@@ -21,13 +21,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Ime:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                <TextBox x:Name="TextBox_Ime" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBox}" />
+                <TextBox x:Name="TextBox_Ime" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBox}" TextChanged="TextBox_TextChanged"/>
 
                 <Label Content="Prezime:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                <TextBox x:Name="TextBox_Prezime" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBox}" />
+                <TextBox x:Name="TextBox_Prezime" Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernTextBox}" TextChanged="TextBox_TextChanged" />
 
                 <Label Content="Username:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                <TextBox x:Name="TextBox_Username" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBox}"  />
+                <TextBox x:Name="TextBox_Username" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBox}" TextChanged="TextBox_TextChanged" />
 
                 <Button x:Name="Button_Pretrazi" Grid.Column="2" Grid.RowSpan="3" Content="Prikaži sve" Style="{StaticResource ModernButton}" Click="Button_Pretrazi_Click" />
             </Grid>

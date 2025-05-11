@@ -34,11 +34,23 @@ namespace SmartCashRegister
             DataGrid_Zaposleni.Visibility = Visibility.Visible;
             if (Button_Pretrazi.Content.ToString() == "Pretrazi")
             {
-                //DataGrid_Zaposleni.ItemsSource = _uredjivanjeZaposlenihService.PretraziZaposlenog(TextBox_Ime.Text, TextBox_Prezime.Text, TextBox_Username.Text);
+                DataGrid_Zaposleni.ItemsSource = _uredjivanjeZaposlenihService.PretraziZaposlenog(TextBox_Ime.Text, TextBox_Prezime.Text, TextBox_Username.Text);
             }
             else
             {
                 DataGrid_Zaposleni.ItemsSource = _uredjivanjeZaposlenihService.PrikaziSveZaposlene();
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TextBox_Ime.Text != string.Empty || TextBox_Prezime.Text != string.Empty || TextBox_Username.Text != string.Empty)
+            {
+                Button_Pretrazi.Content = "Pretrazi";
+            }
+            else
+            {
+                Button_Pretrazi.Content = "Prikazi sve";
             }
         }
     }

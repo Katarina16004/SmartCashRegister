@@ -10,6 +10,6 @@ namespace SmartCashRegister.Services.Interfaces
     public interface IUredjivanjeZaposlenihService
     {
         public IEnumerable<Osoba> PrikaziSveZaposlene();
-        //public IEnumerable<Osoba> PretraziZaposlenog(string ime = "", string prezime = "", string username = "");
+        public IEnumerable<Osoba> PretraziZaposlenog(string ime = "", string prezime = "", string username = "");
     }
 }
