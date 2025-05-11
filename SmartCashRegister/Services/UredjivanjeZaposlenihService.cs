@@ -108,9 +108,36 @@ namespace SmartCashRegister.Services
 
             return dt.Rows.Count > 0;
         }
+        private bool DaLiPostojiJmbgIliUsernameOsimOvog(string? jmbg, string? username, int osobaId)
+        {
+            string query = $"SELECT * FROM Osoba WHERE jmbg = '{jmbg}' OR username = '{username}' AND osoba_id!={osobaId}";
+            DataTable dt = _dbPristup.ExecuteQuery(query);
+
+            return dt.Rows.Count > 0;
+        }
         public bool ObrisiZaposlenog(int osobaId)
         {
             string query = $"DELETE FROM Osoba WHERE osoba_id = {osobaId}";
+            return _dbPristup.ExecuteNonQuery(query) > 0;
+        }
+        public bool IzmeniZaposlenog(Osoba o)
+        {
+            if (DaLiPostojiJmbgIliUsernameOsimOvog(o.Jmbg, o.Username,o.OsobaId))
+            {
+                MessageBox.Show("Zaposleni sa istim JMBG-om ili korisničkim imenom već postoji");
+                return false;
+            }
+            string query = $@"
+                UPDATE Osoba SET
+                    ime = '{o.Ime}',
+                    prezime = '{o.Prezime}',
+                    jmbg = '{o.Jmbg}',
+                    telefon = '{o.Telefon}',
+                    username = '{o.Username}',
+                    sifra = '{o.Sifra}',
+                    uloga = '{o.Uloga}'
+                WHERE osoba_id = {o.OsobaId}";
+
             return _dbPristup.ExecuteNonQuery(query) > 0;
         }
     }

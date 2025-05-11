@@ -147,12 +147,18 @@ namespace SmartCashRegister
         }
         private bool ProveriPolja()
         {
+            string unetaLozinka;
+            if (PasswordBox.Visibility == Visibility.Visible)
+                unetaLozinka = PasswordBox.Password;
+            else
+                unetaLozinka = PasswordTextBox.Text;
+
             if (Input_Ime.Text == "" ||
                 Input_Prezime.Text == "" ||
                 Input_JMBG.Text == "" ||
                 Input_Telefon.Text == "" ||
                 Input_Username.Text == "" ||
-                PasswordTextBox.Text == "" ||
+                string.IsNullOrWhiteSpace(unetaLozinka) ||
                 Input_Uloga.Text == "")
             {
                 MessageBox.Show("Morate popuniti SVA polja");
@@ -200,6 +206,29 @@ namespace SmartCashRegister
             }
 
             
+        }
+
+        private void Button_Izmeni_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGrid_Zaposleni.SelectedItem is Osoba selektovanaOsoba)
+            {
+                selektovanaOsoba.Ime = Input_Ime.Text;
+                selektovanaOsoba.Prezime = Input_Prezime.Text;
+                selektovanaOsoba.Jmbg = Input_JMBG.Text;
+                selektovanaOsoba.Telefon = Input_Telefon.Text;
+                selektovanaOsoba.Username = Input_Username.Text;
+                selektovanaOsoba.Sifra = PasswordBox.Password;
+                selektovanaOsoba.Uloga = (Input_Uloga.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+                bool uspeh = _uredjivanjeZaposlenihService.IzmeniZaposlenog(selektovanaOsoba);
+
+                if (uspeh)
+                {
+                    MessageBox.Show("Podaci su uspešno izmenjeni");
+                    OsveziDataGrid();
+                    OcistiPolja();
+                }
+            }
         }
     }
 }

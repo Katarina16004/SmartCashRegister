@@ -13,5 +13,6 @@ namespace SmartCashRegister.Services.Interfaces
         public IEnumerable<Osoba> PretraziZaposlenog(string ime = "", string prezime = "", string username = "");
         public bool DodajZaposlenog(Osoba o);
         public bool ObrisiZaposlenog(int osobaId);
+        public bool IzmeniZaposlenog(Osoba o);
     }
 }
