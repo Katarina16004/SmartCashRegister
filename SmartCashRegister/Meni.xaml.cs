@@ -19,6 +19,7 @@ namespace SmartCashRegister
         private KreiranjeRacunaService kreiranjeRacunaService;
         private UpravljanjeRacunomService upravljanjeRacunomService;
         private PodesavanjeProfilaService podesavanjeProfilaService;
+        private UredjivanjeZaposlenihService uredjivanjeZaposlenihService;
         public Meni(Osoba prijavljeni)
         {
             InitializeComponent();
@@ -44,6 +45,7 @@ namespace SmartCashRegister
             pretragaRacunaService= new PretragaRacunaService(dbPristup);
             upravljanjeRacunomService = new UpravljanjeRacunomService(dbPristup, pretragaRacunaService);
             podesavanjeProfilaService=new PodesavanjeProfilaService(dbPristup);
+            uredjivanjeZaposlenihService=new UredjivanjeZaposlenihService(dbPristup);
         }
 
         private void ButtonProdaja_Click(object sender, RoutedEventArgs e)
@@ -94,7 +96,7 @@ namespace SmartCashRegister
         private void ButtonUrediZaposlene_Click(object sender, RoutedEventArgs e)
         {
             AktivanButton(ButtonUrediZaposlene);
-            MainContent.Content = new UrediZaposlene();
+            MainContent.Content = new UrediZaposlene(uredjivanjeZaposlenihService);
         }
     }
 }

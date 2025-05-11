@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartCashRegister.Services;
+using SmartCashRegister.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,24 @@ namespace SmartCashRegister
     /// </summary>
     public partial class UrediZaposlene : UserControl
     {
-        public UrediZaposlene()
+        private readonly IUredjivanjeZaposlenihService _uredjivanjeZaposlenihService;
+        public UrediZaposlene(IUredjivanjeZaposlenihService uredjivanjeZaposlenihService)
         {
+            _uredjivanjeZaposlenihService = uredjivanjeZaposlenihService;
             InitializeComponent();
+        }
+
+        private void Button_Pretrazi_Click(object sender, RoutedEventArgs e)
+        {
+            DataGrid_Zaposleni.Visibility = Visibility.Visible;
+            if (Button_Pretrazi.Content.ToString() == "Pretrazi")
+            {
+                //DataGrid_Zaposleni.ItemsSource = _uredjivanjeZaposlenihService.PretraziZaposlenog(TextBox_Ime.Text, TextBox_Prezime.Text, TextBox_Username.Text);
+            }
+            else
+            {
+                DataGrid_Zaposleni.ItemsSource = _uredjivanjeZaposlenihService.PrikaziSveZaposlene();
+            }
         }
     }
 }

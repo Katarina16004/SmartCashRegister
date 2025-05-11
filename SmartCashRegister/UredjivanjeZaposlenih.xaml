@@ -29,10 +29,10 @@
                 <Label Content="Username:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" />
                 <TextBox x:Name="TextBox_Username" Grid.Row="2" Grid.Column="1" Style="{StaticResource ModernTextBox}"  />
 
-                <Button x:Name="Button_Pretrazi" Grid.Column="2" Grid.RowSpan="3" Content="Prikaži sve" Style="{StaticResource ModernButton}" />
+                <Button x:Name="Button_Pretrazi" Grid.Column="2" Grid.RowSpan="3" Content="Prikaži sve" Style="{StaticResource ModernButton}" Click="Button_Pretrazi_Click" />
             </Grid>
 
-            <DataGrid x:Name="DataGrid_Zaposleni" Style="{StaticResource ModernDataGrid}" AutoGenerateColumns="False" IsReadOnly="True" Height="130" VerticalScrollBarVisibility="Auto" CanUserAddRows="False" Margin="10">
+            <DataGrid x:Name="DataGrid_Zaposleni" Visibility="Hidden" Style="{StaticResource ModernDataGrid}" AutoGenerateColumns="False" IsReadOnly="True" Height="130" VerticalScrollBarVisibility="Auto" CanUserAddRows="False" Margin="10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding OsobaId}" Width="Auto"/>
                     <DataGridTextColumn Header="Ime" Binding="{Binding Ime}" Width="*"/>
