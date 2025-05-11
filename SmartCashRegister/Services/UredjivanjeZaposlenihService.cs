@@ -3,6 +3,7 @@ using SmartCashRegister.Services.Interfaces;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace SmartCashRegister.Services
 {
@@ -85,6 +86,27 @@ namespace SmartCashRegister.Services
             }
             return filtrirani;
         }
-        
+        public bool DodajZaposlenog(Osoba o)
+        {
+            if (DaLiPostojiJmbgIliUsername(o.Jmbg, o.Username))
+            {
+                MessageBox.Show("Zaposleni sa istim JMBG-om ili korisničkim imenom već postoji");
+                return false;
+            }
+
+            string query = $"INSERT INTO Osoba (ime, prezime, jmbg, telefon, username, sifra, uloga) " +
+                           $"VALUES ('{o.Ime}', '{o.Prezime}', '{o.Jmbg}', '{o.Telefon}', '{o.Username}', '{o.Sifra}', '{o.Uloga}')";
+
+            int rezultat = _dbPristup.ExecuteNonQuery(query);
+
+            return rezultat > 0;
+        }
+        private bool DaLiPostojiJmbgIliUsername(string jmbg, string username)
+        {
+            string query = $"SELECT * FROM Osoba WHERE jmbg = '{jmbg}' OR username = '{username}'";
+            DataTable dt = _dbPristup.ExecuteQuery(query);
+
+            return dt.Rows.Count > 0;
+        }
     }
 }

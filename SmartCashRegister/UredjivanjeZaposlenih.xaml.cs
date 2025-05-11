@@ -50,6 +50,7 @@ namespace SmartCashRegister
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            PasswordBox.Password = PasswordTextBox.Text;
             if (TextBox_Ime.Text != string.Empty || TextBox_Prezime.Text != string.Empty || TextBox_Username.Text != string.Empty)
             {
                 Button_Pretrazi.Content = "Pretrazi";
@@ -83,7 +84,7 @@ namespace SmartCashRegister
                 DataRow row = dt.Rows[0];
                 Input_Ime.Text = row["ime"].ToString();
                 Input_Prezime.Text = row["prezime"].ToString();
-                Input_JMBG.Text = row["prezime"].ToString();
+                Input_JMBG.Text = row["jmbg"].ToString();
                 Input_Telefon.Text = row["telefon"].ToString();
                 Input_Username.Text = row["username"].ToString();
                 PasswordBox.Password = row["sifra"].ToString();
@@ -104,6 +105,7 @@ namespace SmartCashRegister
             }
             else
             {
+                PasswordTextBox.Text = PasswordBox.Password;
                 PasswordTextBox.Visibility = Visibility.Visible;
                 PasswordBox.Visibility = Visibility.Collapsed;
 
@@ -111,6 +113,73 @@ namespace SmartCashRegister
             }
 
             vidljivostLozinke = !vidljivostLozinke;
+        }
+
+        private void Button_Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+            if(ProveriPolja())
+            {
+                Osoba novaOsoba = new Osoba
+                {
+                    Ime = Input_Ime.Text,
+                    Prezime = Input_Prezime.Text,
+                    Jmbg = Input_JMBG.Text,
+                    Telefon = Input_Telefon.Text,
+                    Username = Input_Username.Text,
+                    Sifra = PasswordBox.Password,
+                    Uloga = (Input_Uloga.SelectedItem as ComboBoxItem)?.Content.ToString()
+                };
+
+                bool uspeh = _uredjivanjeZaposlenihService.DodajZaposlenog(novaOsoba);
+
+                if (uspeh)
+                {
+                    MessageBox.Show("Zaposleni je uspešno dodat");
+                    OsveziDataGrid();
+                    OcistiPolja();
+                }
+            }
+        }
+        private void OsveziDataGrid()
+        {
+            DataGrid_Zaposleni.ItemsSource = null;
+            DataGrid_Zaposleni.ItemsSource = _uredjivanjeZaposlenihService.PrikaziSveZaposlene();
+        }
+        private bool ProveriPolja()
+        {
+            if (Input_Ime.Text == "" ||
+                Input_Prezime.Text == "" ||
+                Input_JMBG.Text == "" ||
+                Input_Telefon.Text == "" ||
+                Input_Username.Text == "" ||
+                PasswordTextBox.Text == "" ||
+                Input_Uloga.Text == "")
+            {
+                MessageBox.Show("Morate popuniti SVA polja");
+                return false;
+            }
+            return true;
+        }
+
+        private void OcistiPolja()
+        {
+            Input_Ime.Clear();
+            Input_Prezime.Clear();
+            Input_JMBG.Clear();
+            Input_Telefon.Clear();
+            Input_Username.Clear();
+            PasswordBox.Clear();
+            PasswordTextBox.Clear();
+            Input_Uloga.SelectedIndex = -1;
+            DataGrid_Zaposleni.SelectedItem = null;
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(PasswordBox.Password))
+                EyeIcon.Visibility = Visibility.Collapsed;
+            else
+                EyeIcon.Visibility = Visibility.Visible;
         }
     }
 }

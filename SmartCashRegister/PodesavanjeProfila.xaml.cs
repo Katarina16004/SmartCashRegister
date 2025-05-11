@@ -52,7 +52,6 @@ namespace SmartCashRegister
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            PasswordTextBox.Text = PasswordBox.Password;
             if (string.IsNullOrEmpty(PasswordBox.Password))
                 EyeIcon.Visibility = Visibility.Collapsed;
             else
@@ -70,6 +69,7 @@ namespace SmartCashRegister
             }
             else
             {
+                PasswordTextBox.Text = PasswordBox.Password;
                 PasswordTextBox.Visibility = Visibility.Visible;
                 PasswordBox.Visibility = Visibility.Collapsed;
 

@@ -81,9 +81,9 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="30" />
                     </Grid.ColumnDefinitions>
-                    <PasswordBox x:Name="PasswordBox" Style="{StaticResource ModernPasswordBox}" Width="250" HorizontalAlignment="Left" />
-                    <TextBox x:Name="PasswordTextBox" Style="{StaticResource ModernTextBox}" Visibility="Collapsed" Width="250" HorizontalAlignment="Left"/>
-                    <Image x:Name="EyeIcon" Source="Resources/otvoreno_oko.png" Width="40" Height="40" Grid.Column="1" MouseDown="EyeIcon_MouseDown"/>
+                    <PasswordBox x:Name="PasswordBox" Style="{StaticResource ModernPasswordBox}" Width="250" HorizontalAlignment="Left" PasswordChanged="PasswordBox_PasswordChanged" />
+                    <TextBox x:Name="PasswordTextBox" Style="{StaticResource ModernTextBox}" Visibility="Collapsed" Width="250" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged"/>
+                    <Image x:Name="EyeIcon" Source="Resources/otvoreno_oko.png" Width="40" Height="40" Grid.Column="1" MouseDown="EyeIcon_MouseDown" Visibility="Hidden"/>
                 </Grid>
 
                 <Label Content="Uloga:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" />
@@ -93,7 +93,7 @@
                 </ComboBox>
 
                 <StackPanel Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
-                    <Button x:Name="Button_Dodaj" Content="Dodaj zaposlenog" Margin="0,0,0,10" Style="{StaticResource ModernButton}" Background="LightGreen"/>
+                    <Button x:Name="Button_Dodaj" Content="Dodaj zaposlenog" Margin="0,0,0,10" Style="{StaticResource ModernButton}" Background="LightGreen" Click="Button_Dodaj_Click"/>
                     <Button x:Name="Button_Izmeni" Content="Sačuvaj promene" Margin="0,0,0,10" Style="{StaticResource ModernButton}" Background="Khaki" Visibility="Hidden"/>
                     <Button x:Name="Button_Obrisi" Content="Obriši zaposlenog" Style="{StaticResource ModernButton}" Background="Salmon" Visibility="Hidden"/>
                 </StackPanel>
