@@ -212,6 +212,21 @@ namespace SmartCashRegister
         {
             if (DataGrid_Zaposleni.SelectedItem is Osoba selektovanaOsoba)
             {
+                bool nestoSePromenilo =
+                    selektovanaOsoba.Ime != Input_Ime.Text ||
+                    selektovanaOsoba.Prezime != Input_Prezime.Text ||
+                    selektovanaOsoba.Jmbg != Input_JMBG.Text ||
+                    selektovanaOsoba.Telefon != Input_Telefon.Text ||
+                    selektovanaOsoba.Username != Input_Username.Text ||
+                    selektovanaOsoba.Sifra != PasswordBox.Password ||
+                    selektovanaOsoba.Uloga != (Input_Uloga.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+                if (!nestoSePromenilo)
+                {
+                    MessageBox.Show("Nema promena za čuvanje");
+                    return;
+                }
+
                 selektovanaOsoba.Ime = Input_Ime.Text;
                 selektovanaOsoba.Prezime = Input_Prezime.Text;
                 selektovanaOsoba.Jmbg = Input_JMBG.Text;
