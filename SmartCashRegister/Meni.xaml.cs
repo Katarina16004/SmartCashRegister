@@ -99,7 +99,7 @@ namespace SmartCashRegister
         private void ButtonUrediProizvode_Click(object sender, RoutedEventArgs e)
         {
             AktivanButton(ButtonUrediProizvode);
-            MainContent.Content = new UredjivanjeProizvoda(pretragaProizvodaService);
+            MainContent.Content = new UredjivanjeProizvoda(pretragaProizvodaService,dbPristup);
         }
     }
 }

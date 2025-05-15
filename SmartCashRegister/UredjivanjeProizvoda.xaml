@@ -8,22 +8,24 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
         <StackPanel>
-            <Grid Margin="0,0,0,10">
+
+            <Grid Margin="0,15,0,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
+                <Label Content="Barkod:" VerticalAlignment="Center" HorizontalAlignment="Right" />
                 <TextBox x:Name="TextBox_BarKodProizvoda" Style="{StaticResource ModernTextBox}" Width="200" Margin="0,0,10,0" VerticalAlignment="Center" TextChanged="TextBox_TextChanged"
-                          Grid.Column="0"/>
+                          Grid.Column="1"/>
 
-                <Button x:Name="Button_PretraziProizvod" Content="Pretraži" Click="Button_PretraziProizvod_Click" 
-                        Style="{StaticResource ModernButton}" Grid.Column="1" Margin="0,0,10,0"/>
+                <Button x:Name="Button_PretraziProizvod" Content="Prikaži sve" Click="Button_PretraziProizvod_Click" 
+                        Style="{StaticResource ModernButton}" Grid.Column="2" Margin="0,0,10,0"/>
             </Grid>
 
             <DataGrid x:Name="dataGridProizvodi" AutoGenerateColumns="False" Visibility="Hidden"
-                      Style="{StaticResource ModernDataGrid}" IsReadOnly="True" SelectionChanged="dataGridProizvodi_SelectionChanged" Height="150" Margin="0,0,0,10">
+                      Style="{StaticResource ModernDataGrid}" IsReadOnly="True" SelectionChanged="dataGridProizvodi_SelectionChanged" Height="200" Margin="0,0,0,10">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID proizvoda" Binding="{Binding ProizvodId}" Width="Auto"/>
                     <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" Width="*"/>
@@ -69,7 +71,7 @@
                             Style="{StaticResource ModernButton}" Background="LightGreen"/>
                     <Button x:Name="Button_Izmeni" Content="Sačuvaj promene" Margin="0,0,0,10"
                             Style="{StaticResource ModernButton}" Background="Khaki" Visibility="Hidden"/>
-                    <Button x:Name="Button_Obrisi" Content="Obriši proizvod"
+                    <Button x:Name="Button_Obrisi" Content="Obriši proizvod"  Margin="0,0,0,10"
                             Style="{StaticResource ModernButton}" Background="Salmon" Visibility="Hidden"/>
                 </StackPanel>
             </Grid>
