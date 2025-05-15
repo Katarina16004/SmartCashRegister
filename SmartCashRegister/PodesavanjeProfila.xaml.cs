@@ -19,11 +19,6 @@ namespace SmartCashRegister
         Osoba prijavljeni;
         private readonly IPodesavanjeProfilaService _podesavanjeProfilaService;
         private readonly IPristupBaziService _dbPristup;
-        private string? poslednjeSacuvanoIme;
-        private string? poslednjeSacuvanoPrezime;
-        private string? poslednjiSacuvanTelefon;
-        private string? poslednjiSacuvanUsername;
-        private string? poslednjaSacuvanaLozinka;
         public PodesavanjeProfila(Osoba prijavljeni, IPristupBaziService dbPristup, IPodesavanjeProfilaService podesavanjeProfilaService)
         {
             InitializeComponent();
@@ -40,11 +35,11 @@ namespace SmartCashRegister
             if (dt.Rows.Count > 0)
             {
                 DataRow row = dt.Rows[0];
-                poslednjeSacuvanoIme=txtIme.Text = row["ime"].ToString();
-                poslednjeSacuvanoPrezime=txtPrezime.Text = row["prezime"].ToString();
-                poslednjiSacuvanTelefon=txtTelefon.Text = row["telefon"].ToString();
-                poslednjiSacuvanUsername=txtUsername.Text = row["username"].ToString();
-                poslednjaSacuvanaLozinka=PasswordBox.Password = row["sifra"].ToString();
+                txtIme.Text = row["ime"].ToString();
+                txtPrezime.Text = row["prezime"].ToString();
+                txtTelefon.Text = row["telefon"].ToString();
+                txtUsername.Text = row["username"].ToString();
+                PasswordBox.Password = row["sifra"].ToString();
                 PasswordTextBox.Text = PasswordBox.Password;
             }
             return true;
@@ -86,42 +81,22 @@ namespace SmartCashRegister
 
         private void btnSacuvaj_Click(object sender, RoutedEventArgs e)
         {
-            string promenjeno = "";
-            if (poslednjeSacuvanoIme != txtIme.Text)
-            {
-                _podesavanjeProfilaService.PromeniIme(prijavljeni.OsobaId, txtIme.Text);
-                promenjeno = promenjeno + " ime,";
-                poslednjeSacuvanoIme = txtIme.Text;
-            }
-            if(poslednjeSacuvanoPrezime!=txtPrezime.Text)
-            {
-                _podesavanjeProfilaService.PromeniPrezime(prijavljeni.OsobaId, txtPrezime.Text);
-                promenjeno = promenjeno + " prezime,";
-                poslednjeSacuvanoPrezime = txtPrezime.Text;
-            }
-            if (poslednjiSacuvanTelefon != txtTelefon.Text)
-            {
-                _podesavanjeProfilaService.PromeniTelefon(prijavljeni.OsobaId, txtTelefon.Text);
-                promenjeno = promenjeno + " telefon,";
-                poslednjiSacuvanTelefon = txtTelefon.Text;
-            }
-            if (poslednjiSacuvanUsername != txtUsername.Text)
-            {
-                _podesavanjeProfilaService.PromeniUsername(prijavljeni.OsobaId, txtUsername.Text);
-                promenjeno = promenjeno + " username,";
-                poslednjiSacuvanUsername = txtUsername.Text;
-            }
-            if (poslednjaSacuvanaLozinka != PasswordTextBox.Text)
-            {
-                _podesavanjeProfilaService.PromeniLozinku(prijavljeni.OsobaId, PasswordTextBox.Text);
-                promenjeno = promenjeno + " lozinku,";
-                poslednjaSacuvanaLozinka = PasswordTextBox.Text;
-            }
+            bool uspesno = _podesavanjeProfilaService.SacuvajPromeneAkoPostoje(
+                prijavljeni,
+                txtIme.Text,
+                txtPrezime.Text,
+                txtTelefon.Text,
+                txtUsername.Text,
+                PasswordTextBox.Text
+            );
 
-            if (promenjeno!="")
+            if (uspesno)
             {
-                promenjeno=promenjeno.Substring(0,promenjeno.Length-1);
-                MessageBox.Show("Uspesno ste promenili" + promenjeno);
+                MessageBox.Show("Uspešno ste sačuvali promene");
+            }
+            else
+            {
+                MessageBox.Show("Nema promena za čuvanje");
             }
 
         }

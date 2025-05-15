@@ -1,53 +1,70 @@
-﻿
-
-using System.Windows;
+﻿using Microsoft.Data.SqlClient;
+using SmartCashRegister.Models;
 
 namespace SmartCashRegister.Services.Interfaces
 {
     public class PodesavanjeProfilaService:IPodesavanjeProfilaService
     {
         private readonly IPristupBaziService _dbPristup;
+
         public PodesavanjeProfilaService(IPristupBaziService dbPristup)
         {
             _dbPristup = dbPristup;
         }
-        public bool PromeniIme(int prijavljeniId, string novoIme)
+
+        public bool SacuvajPromeneAkoPostoje(Osoba osoba, string novoIme, string novoPrezime, string noviTelefon, string noviUsername, string novaLozinka)
         {
-            return IzmeniPolje("ime", novoIme, prijavljeniId, "imena");
-        }
+            var uslovi = new List<string>();
+            var parameters = new List<SqlParameter>();
 
-        public bool PromeniPrezime(int prijavljeniId, string novoPrezime)
-        {
-            return IzmeniPolje("prezime", novoPrezime, prijavljeniId, "prezimena");
-        }
-
-        public bool PromeniTelefon(int prijavljeniId, string noviTelefon)
-        {
-            return IzmeniPolje("telefon", noviTelefon, prijavljeniId, "telefona");
-        }
-
-        public bool PromeniUsername(int prijavljeniId, string noviUsername)
-        {
-            return IzmeniPolje("username", noviUsername, prijavljeniId, "username-a");
-        }
-
-        public bool PromeniLozinku(int prijavljeniId, string novaLozinka)
-        {
-            return IzmeniPolje("sifra", novaLozinka, prijavljeniId, "lozinke");
-        }
-
-        private bool IzmeniPolje(string nazivKolone, string novaVrednost, int osobaId, string nazivPoljaZaPrikaz)
-        {
-            string query = $"UPDATE Osoba SET {nazivKolone} = '{novaVrednost}' WHERE osoba_id = {osobaId}";
-
-            int rezultat = _dbPristup.ExecuteNonQuery(query);
-
-            if (rezultat == 0)
+            if (osoba.Ime != novoIme)
             {
-                MessageBox.Show("Greška pri izmeni " + nazivPoljaZaPrikaz);
+                uslovi.Add("ime = @ime");
+                parameters.Add(new SqlParameter("@ime", novoIme));
+            }
+            if (osoba.Prezime != novoPrezime)
+            {
+                uslovi.Add("prezime = @prezime");
+                parameters.Add(new SqlParameter("@prezime", novoPrezime));
+            }
+            if (osoba.Telefon != noviTelefon)
+            {
+                uslovi.Add("telefon = @telefon");
+                parameters.Add(new SqlParameter("@telefon", noviTelefon));
+            }
+            if (osoba.Username != noviUsername)
+            {
+                uslovi.Add("username = @username");
+                parameters.Add(new SqlParameter("@username", noviUsername));
+            }
+            if (osoba.Sifra != novaLozinka)
+            {
+                uslovi.Add("sifra = @sifra");
+                parameters.Add(new SqlParameter("@sifra", novaLozinka));
+            }
+
+            if (uslovi.Count == 0)
+            {
                 return false;
             }
-            return true;
+
+            string query = $"UPDATE Osoba SET {string.Join(", ", uslovi)} WHERE osoba_id = @osoba_id";
+            parameters.Add(new SqlParameter("@osoba_id", osoba.OsobaId));
+
+            int result = _dbPristup.ExecuteNonQuery(query, parameters.ToArray());
+
+            if (result > 0)
+            {
+                osoba.Ime = novoIme;
+                osoba.Prezime = novoPrezime;
+                osoba.Telefon = noviTelefon;
+                osoba.Username = noviUsername;
+                osoba.Sifra = novaLozinka;
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
