@@ -220,13 +220,16 @@ namespace SmartCashRegister
                 selektovanaOsoba.Sifra = PasswordBox.Password;
                 selektovanaOsoba.Uloga = (Input_Uloga.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-                bool uspeh = _uredjivanjeZaposlenihService.IzmeniZaposlenog(selektovanaOsoba);
-
-                if (uspeh)
+                if (ProveriPolja())
                 {
-                    MessageBox.Show("Podaci su uspešno izmenjeni");
-                    OsveziDataGrid();
-                    OcistiPolja();
+                    bool uspeh = _uredjivanjeZaposlenihService.IzmeniZaposlenog(selektovanaOsoba);
+
+                    if (uspeh)
+                    {
+                        MessageBox.Show("Podaci su uspešno izmenjeni");
+                        OsveziDataGrid();
+                        OcistiPolja();
+                    }
                 }
             }
         }

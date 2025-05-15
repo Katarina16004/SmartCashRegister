@@ -110,7 +110,7 @@ namespace SmartCashRegister.Services
         }
         private bool DaLiPostojiJmbgIliUsernameOsimOvog(string? jmbg, string? username, int osobaId)
         {
-            string query = $"SELECT * FROM Osoba WHERE jmbg = '{jmbg}' OR username = '{username}' AND osoba_id!={osobaId}";
+            string query = $"SELECT * FROM Osoba WHERE (jmbg = '{jmbg}' OR username = '{username}') AND osoba_id!={osobaId}";
             DataTable dt = _dbPristup.ExecuteQuery(query);
 
             return dt.Rows.Count > 0;

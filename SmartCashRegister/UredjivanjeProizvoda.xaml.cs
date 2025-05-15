@@ -4,6 +4,7 @@ using SmartCashRegister.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,7 +79,9 @@ namespace SmartCashRegister
             {
                 DataRow row = dt.Rows[0];
                 Input_Naziv.Text = row["naziv"].ToString();
-                Input_Cena.Text = row["cena"].ToString();
+                decimal cena = Convert.ToDecimal(row["cena"]);
+                Input_Cena.Text = cena.ToString(CultureInfo.InvariantCulture);
+                //Input_Cena.Text = row["cena"].ToString();
                 Input_Kolicina.Text = row["kolicina"].ToString();
                 Input_Barkod.Text = row["barkod"].ToString();
                 ComboBox_Kategorija.SelectedValue = Convert.ToInt32(row["kategorija_id"]);
@@ -110,7 +113,7 @@ namespace SmartCashRegister
         {
             if(ProveriPolja())
             {
-                if (!decimal.TryParse(Input_Cena.Text.Replace('.',','), out decimal cena))
+                if (!decimal.TryParse(Input_Cena.Text.Replace('.', ','), out decimal cena))
                 {
                     MessageBox.Show("Cena nije validna");
                     return;
@@ -185,5 +188,41 @@ namespace SmartCashRegister
                 }
             }
         }
+
+        private void Button_Izmeni_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridProizvodi.SelectedItem is Proizvod selektovaniProizvod)
+            {
+                if (!decimal.TryParse(Input_Cena.Text.Replace('.',','), out decimal cena))
+                {
+                    MessageBox.Show("Cena nije validna");
+                    return;
+                }
+
+                if (!int.TryParse(Input_Kolicina.Text, out int kolicina))
+                {
+                    MessageBox.Show("Količina nije validna");
+                    return;
+                }
+                selektovaniProizvod.Naziv = Input_Naziv.Text;
+                selektovaniProizvod.Cena = cena;
+                selektovaniProizvod.Kolicina=kolicina;
+                selektovaniProizvod.Barkod= Input_Barkod.Text;
+                selektovaniProizvod.KategorijaId = (int)ComboBox_Kategorija.SelectedValue;
+
+                if (ProveriPolja())
+                {
+                    bool uspeh = _uredjivanjeProizvodaService.IzmeniProizvod(selektovaniProizvod);
+
+                    if (uspeh)
+                    {
+                        MessageBox.Show("Podaci su uspešno izmenjeni");
+                        OsveziDataGrid();
+                        OcistiPolja();
+                    }
+                }
+            }
+        }
+        
     }
 }

@@ -45,10 +45,45 @@ namespace SmartCashRegister.Services
 
             return dt.Rows.Count > 0;
         }
+        private bool DaLiPostojiBarkodOsimOvog(string? barkod, int proizvodId)
+        {
+            string query = $"SELECT * FROM Proizvod WHERE barkod = '{barkod}' AND proizvod_id!={proizvodId}";
+            DataTable dt = _dbPristup.ExecuteQuery(query);
+
+            return dt.Rows.Count > 0;
+        }
         public bool ObrisiProizvod(int proizvodId)
         {
             string query = $"DELETE FROM Proizvod WHERE proizvod_id = {proizvodId}";
             return _dbPristup.ExecuteNonQuery(query) > 0;
+        }
+        public bool IzmeniProizvod(Proizvod p)
+        {
+            if (DaLiPostojiBarkodOsimOvog(p.Barkod, p.ProizvodId))
+            {
+                MessageBox.Show("Proizvod sa istim barkod-om već postoji");
+                return false;
+            }
+            string query = @"
+                UPDATE Proizvod SET
+                    naziv = @naziv,
+                    cena = @cena,
+                    kolicina = @kolicina,
+                    barkod = @barkod,
+                    kategorija_id = @kategorija_id
+                WHERE proizvod_id = @proizvod_id";
+
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@naziv", p.Naziv),
+                new SqlParameter("@cena", p.Cena),
+                new SqlParameter("@kolicina", p.Kolicina),
+                new SqlParameter("@barkod", p.Barkod),
+                new SqlParameter("@kategorija_id", p.KategorijaId),
+                new SqlParameter("@proizvod_id", p.ProizvodId)
+            };
+
+            return _dbPristup.ExecuteNonQuery(query,parameters) > 0;
         }
     }
 }
