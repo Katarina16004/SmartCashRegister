@@ -1,4 +1,5 @@
-﻿using SmartCashRegister.Models;
+﻿using iTextSharp.text.pdf;
+using SmartCashRegister.Models;
 using SmartCashRegister.Services;
 using SmartCashRegister.Services.Interfaces;
 using System;
@@ -204,6 +205,19 @@ namespace SmartCashRegister
                     MessageBox.Show("Količina nije validna");
                     return;
                 }
+                bool nestoSePromenilo =
+                    selektovaniProizvod.Naziv != Input_Naziv.Text ||
+                    selektovaniProizvod.Cena != cena ||
+                    selektovaniProizvod.Kolicina != kolicina ||
+                    selektovaniProizvod.Barkod != Input_Barkod.Text ||
+                    selektovaniProizvod.KategorijaId != (int)ComboBox_Kategorija.SelectedValue;
+
+                if (!nestoSePromenilo)
+                {
+                    MessageBox.Show("Nema promena za čuvanje");
+                    return;
+                }
+
                 selektovaniProizvod.Naziv = Input_Naziv.Text;
                 selektovaniProizvod.Cena = cena;
                 selektovaniProizvod.Kolicina=kolicina;
@@ -212,6 +226,7 @@ namespace SmartCashRegister
 
                 if (ProveriPolja())
                 {
+
                     bool uspeh = _uredjivanjeProizvodaService.IzmeniProizvod(selektovaniProizvod);
 
                     if (uspeh)
