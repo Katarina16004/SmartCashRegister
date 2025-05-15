@@ -22,14 +22,10 @@ namespace SmartCashRegister
     public partial class UredjivanjeProizvoda : UserControl
     {
         private readonly IPretragaProizvodaService _pretragaProizvodaService;
-        private readonly IPrikazKategorijaService _prikazKategorijaService;
-        public UredjivanjeProizvoda(IPretragaProizvodaService pretragaProizvodaService, IPrikazKategorijaService prikazKategorijaService)
+        public UredjivanjeProizvoda(IPretragaProizvodaService pretragaProizvodaService)
         {
             _pretragaProizvodaService = pretragaProizvodaService;
-            _prikazKategorijaService = prikazKategorijaService;
             InitializeComponent();
-
-            dataGridKategorije.ItemsSource = _prikazKategorijaService.PrikaziSve();
         }
 
         private void Button_PretraziProizvod_Click(object sender, RoutedEventArgs e)
@@ -37,7 +33,7 @@ namespace SmartCashRegister
             dataGridProizvodi.Visibility = Visibility.Visible;
             if (Button_PretraziProizvod.Content.ToString() == "Pretrazi")
             {
-                dataGridProizvodi.ItemsSource = _pretragaProizvodaService.PretraziProizvod(TextBox_BarKodProizvoda.Text, TextBox_NazivProizvoda.Text, TextBox_KategorijaProizvoda.Text);
+                dataGridProizvodi.ItemsSource = _pretragaProizvodaService.PretraziProizvod(TextBox_BarKodProizvoda.Text);
             }
             else
             {
@@ -47,7 +43,7 @@ namespace SmartCashRegister
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBox_BarKodProizvoda.Text != string.Empty || TextBox_KategorijaProizvoda.Text != string.Empty || TextBox_NazivProizvoda.Text != string.Empty)
+            if (TextBox_BarKodProizvoda.Text != string.Empty)
             {
                 Button_PretraziProizvod.Content = "Pretrazi";
             }
@@ -55,6 +51,11 @@ namespace SmartCashRegister
             {
                 Button_PretraziProizvod.Content = "Prikazi sve";
             }
+        }
+
+        private void dataGridProizvodi_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

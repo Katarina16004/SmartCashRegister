@@ -70,10 +70,7 @@ namespace SmartCashRegister
         private void ButtonProizvodi_Click(object sender, RoutedEventArgs e)
         {
             AktivanButton(ButtonProizvodi);
-            if (prijavljeni.Uloga == "administrator")
-                MainContent.Content = new UredjivanjeProizvoda(pretragaProizvodaService, prikazKategorijaService);
-            else
-                MainContent.Content = new ProizvodiPrikaz(pretragaProizvodaService,prikazKategorijaService);
+            MainContent.Content = new ProizvodiPrikaz(pretragaProizvodaService,prikazKategorijaService);
         }
         private void AktivanButton(Button trenutni)
         {
@@ -97,6 +94,12 @@ namespace SmartCashRegister
         {
             AktivanButton(ButtonUrediZaposlene);
             MainContent.Content = new UrediZaposlene(uredjivanjeZaposlenihService,dbPristup);
+        }
+
+        private void ButtonUrediProizvode_Click(object sender, RoutedEventArgs e)
+        {
+            AktivanButton(ButtonUrediProizvode);
+            MainContent.Content = new UredjivanjeProizvoda(pretragaProizvodaService);
         }
     }
 }
