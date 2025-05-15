@@ -10,7 +10,7 @@ namespace SmartCashRegister.Services.Interfaces
     public interface IUredjivanjeProizvodaService
     {
         public bool DodajProizvod(Proizvod p);
-        //public bool ObrisiProizvod(int proizvodId);
+        public bool ObrisiProizvod(int proizvodId);
         //public bool IzmeniProizvod(Proizvod p);
     }
 }

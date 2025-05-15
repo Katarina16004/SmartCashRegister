@@ -167,5 +167,23 @@ namespace SmartCashRegister
             dataGridProizvodi.ItemsSource = null;
             dataGridProizvodi.ItemsSource = _pretragaProizvodaService.PrikaziSveProizvode();
         }
+
+        private void Button_Obrisi_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridProizvodi.SelectedItem is Proizvod selektovaniProizvod)
+            {
+                var potvrda = MessageBox.Show("Da li ste sigurni da želite da obrišete proizvod?", "Potvrda", MessageBoxButton.YesNo);
+                if (potvrda != MessageBoxResult.Yes) return;
+
+                bool uspeh = _uredjivanjeProizvodaService.ObrisiProizvod(selektovaniProizvod.ProizvodId);
+
+                if (uspeh)
+                {
+                    MessageBox.Show("Proizvod je obrisan");
+                    OsveziDataGrid();
+                    OcistiPolja();
+                }
+            }
+        }
     }
 }

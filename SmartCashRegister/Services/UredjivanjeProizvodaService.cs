@@ -45,5 +45,10 @@ namespace SmartCashRegister.Services
 
             return dt.Rows.Count > 0;
         }
+        public bool ObrisiProizvod(int proizvodId)
+        {
+            string query = $"DELETE FROM Proizvod WHERE proizvod_id = {proizvodId}";
+            return _dbPristup.ExecuteNonQuery(query) > 0;
+        }
     }
 }
