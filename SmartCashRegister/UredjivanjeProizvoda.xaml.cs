@@ -1,4 +1,5 @@
 ﻿using SmartCashRegister.Models;
+using SmartCashRegister.Services;
 using SmartCashRegister.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,11 @@ namespace SmartCashRegister
     {
         private readonly IPretragaProizvodaService _pretragaProizvodaService;
         private readonly IPristupBaziService _dbPristup;
-        public UredjivanjeProizvoda(IPretragaProizvodaService pretragaProizvodaService, IPristupBaziService dbPristup)
+        private readonly IUredjivanjeProizvodaService _uredjivanjeProizvodaService;
+        public UredjivanjeProizvoda(IPretragaProizvodaService pretragaProizvodaService, IPristupBaziService dbPristup, IUredjivanjeProizvodaService uredjivanjeProizvodaService)
         {
             _pretragaProizvodaService = pretragaProizvodaService;
+            _uredjivanjeProizvodaService = uredjivanjeProizvodaService;
             InitializeComponent();
             _dbPristup = dbPristup;
             UcitajKategorije();
@@ -103,5 +106,66 @@ namespace SmartCashRegister
             ComboBox_Kategorija.SelectedValuePath = "KategorijaId";
         }
 
+        private void Button_Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+            if(ProveriPolja())
+            {
+                if (!decimal.TryParse(Input_Cena.Text.Replace('.',','), out decimal cena))
+                {
+                    MessageBox.Show("Cena nije validna");
+                    return;
+                }
+
+                if (!int.TryParse(Input_Kolicina.Text, out int kolicina))
+                {
+                    MessageBox.Show("Količina nije validna");
+                    return;
+                }
+                Proizvod noviProizvod = new Proizvod
+                {
+                    Naziv = Input_Naziv.Text,
+                    Cena = cena,
+                    Kolicina = kolicina,
+                    Barkod = Input_Barkod.Text,
+                    KategorijaId = (int)ComboBox_Kategorija.SelectedValue
+                };
+
+                bool uspeh = _uredjivanjeProizvodaService.DodajProizvod(noviProizvod);
+
+                if (uspeh)
+                {
+                    MessageBox.Show("Proizvod je uspešno dodat");
+                    OsveziDataGrid();
+                    OcistiPolja();
+                }
+            }
+        }
+        private bool ProveriPolja()
+        {
+            if (Input_Naziv.Text == "" ||
+                Input_Cena.Text == "" ||
+                Input_Kolicina.Text == "" ||
+                Input_Barkod.Text == "" ||
+                ComboBox_Kategorija.SelectedValue == null)
+            {
+                MessageBox.Show("Morate popuniti SVA polja");
+                return false;
+            }
+            return true;
+        }
+        private void OcistiPolja()
+        {
+            Input_Naziv.Clear();
+            Input_Cena.Clear();
+            Input_Kolicina.Clear();
+            Input_Barkod.Clear();
+            ComboBox_Kategorija.SelectedIndex = -1;
+            dataGridProizvodi.SelectedItem = null;
+        }
+        private void OsveziDataGrid()
+        {
+            dataGridProizvodi.ItemsSource = null;
+            dataGridProizvodi.ItemsSource = _pretragaProizvodaService.PrikaziSveProizvode();
+        }
     }
 }
