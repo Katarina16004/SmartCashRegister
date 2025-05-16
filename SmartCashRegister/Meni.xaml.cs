@@ -103,5 +103,11 @@ namespace SmartCashRegister
             AktivanButton(ButtonUrediProizvode);
             MainContent.Content = new UredjivanjeProizvoda(pretragaProizvodaService,dbPristup, uredjivanjeProizvodaService);
         }
+
+        private void ButtonUrediKategorije_Click(object sender, RoutedEventArgs e)
+        {
+            AktivanButton(ButtonUrediKategorije);
+            MainContent.Content = new UredjivanjeKategorija();
+        }
     }
 }

@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="SmartCashRegister.UredjivanjeKategorija"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SmartCashRegister"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <StackPanel>
+            <Grid Margin="0,15,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Naziv:" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                <TextBox x:Name="TextBox_Naziv" Style="{StaticResource ModernTextBox}" Width="200" Margin="0,0,10,0" VerticalAlignment="Center" Grid.Column="1"/>
+
+                <Button x:Name="Button_Pretrazi" Content="Prikaži sve" Style="{StaticResource ModernButton}" Grid.Column="2" Margin="0,0,10,0"/>
+            </Grid>
+
+           
+            <DataGrid x:Name="dataGridKategorije" AutoGenerateColumns="False" Visibility="Hidden"
+                      Style="{StaticResource ModernDataGrid}" IsReadOnly="True" Height="250" Margin="0,0,0,10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID kategorije" Binding="{Binding KategorijaId}" Width="Auto"/>
+                    <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Naziv:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="0,15,10,0"/>
+                <TextBox x:Name="Input_Naziv" Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernTextBox}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Margin="10" VerticalAlignment="Bottom">
+                    <Button x:Name="Button_Dodaj" Content="Dodaj kategoriju" Margin="0,0,0,10"
+                            Style="{StaticResource ModernButton}" Background="LightGreen"/>
+                    <Button x:Name="Button_Izmeni" Content="Sačuvaj promene" Margin="0,0,0,10"
+                            Style="{StaticResource ModernButton}" Background="Khaki" Visibility="Hidden"/>
+                    <Button x:Name="Button_Obrisi" Content="Obriši kategoriju" Margin="0,0,0,10"
+                            Style="{StaticResource ModernButton}" Background="Salmon" Visibility="Hidden"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
