@@ -110,11 +110,8 @@ namespace SmartCashRegister.Services
                 ukupnaCena += s.Ukupno; // sabiranje ukupne cene
             }
             var potvrda = MessageBox.Show($"Ukupna cena računa: {ukupnaCena}", "Potvrda", MessageBoxButton.YesNo); //potvrdi se ukoliko je racun placen
-            if (potvrda != MessageBoxResult.Yes)
-            {
-                stavkeRacuna.Clear();
+            if (potvrda != MessageBoxResult.Yes) //ukoliko nije potvrdjen racun, mozda zelimo da izbacimo neku stavku
                 return false;
-            }
 
             string query = @"
                 INSERT INTO Racun (datum, cena, osoba_id, status) 

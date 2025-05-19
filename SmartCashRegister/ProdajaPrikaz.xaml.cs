@@ -68,8 +68,12 @@ namespace SmartCashRegister
 
         private void Button_KreirajRacun_Click(object sender, RoutedEventArgs e)
         {
-            _kreiranjeRacunaService.KreirajRacun(prijavljeni.OsobaId);
-            dataGridStavkeRacuna.ItemsSource = null; //za novi racun
+            if (_kreiranjeRacunaService.KreirajRacun(prijavljeni.OsobaId)) //ukoliko je placanje izvrseno, pustimo racun
+            {
+                TextBox_BarKodProizvoda.Text = "";
+                TextBox_KolicinaProizvoda.Text = "";
+                dataGridStavkeRacuna.ItemsSource = null; 
+            }
         }
 
         private void dataGridStavkeRacuna_SelectionChanged(object sender, SelectionChangedEventArgs e)
