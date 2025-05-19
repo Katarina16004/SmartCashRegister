@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartCashRegister.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,36 @@ namespace SmartCashRegister
     /// </summary>
     public partial class UredjivanjeKategorija : UserControl
     {
-        public UredjivanjeKategorija()
+        private readonly IUredjivanjeKategorijaService _uredjivanjeKategorijaService;
+        public UredjivanjeKategorija(IUredjivanjeKategorijaService uredjivanjeKategorijaService)
         {
+            _uredjivanjeKategorijaService = uredjivanjeKategorijaService;
             InitializeComponent();
+        }
+
+        private void Button_Pretrazi_Click(object sender, RoutedEventArgs e)
+        {
+            dataGridKategorije.Visibility = Visibility.Visible;
+            if (Button_Pretrazi.Content.ToString() == "Pretrazi")
+            {
+                dataGridKategorije.ItemsSource = _uredjivanjeKategorijaService.PretraziKategoriju(TextBox_Naziv.Text);
+            }
+            else
+            {
+                dataGridKategorije.ItemsSource = _uredjivanjeKategorijaService.PrikaziSveKategorije();
+            }
+        }
+
+        private void TextBox_Naziv_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TextBox_Naziv.Text != string.Empty)
+            {
+                Button_Pretrazi.Content = "Pretrazi";
+            }
+            else
+            {
+                Button_Pretrazi.Content = "Prikazi sve";
+            }
         }
     }
 }
