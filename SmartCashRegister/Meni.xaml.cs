@@ -37,15 +37,15 @@ namespace SmartCashRegister
             }
 
             dbPristup = new PristupBaziService();
-            kreiranjeRacunaService = new KreiranjeRacunaService(dbPristup);
+            pretragaRacunaService = new PretragaRacunaService(dbPristup);
+            upravljanjeRacunomService = new UpravljanjeRacunomService(dbPristup, pretragaRacunaService);
+            kreiranjeRacunaService = new KreiranjeRacunaService(dbPristup,upravljanjeRacunomService);
             AktivanButton(ButtonProdaja);
             MainContent.Content = new ProdajaPrikaz(kreiranjeRacunaService,prijavljeni);
 
 
             pretragaProizvodaService = new PretragaProizvodaService(dbPristup);
             prikazKategorijaService = new PrikazKategorijaService(dbPristup);
-            pretragaRacunaService= new PretragaRacunaService(dbPristup);
-            upravljanjeRacunomService = new UpravljanjeRacunomService(dbPristup, pretragaRacunaService);
             podesavanjeProfilaService=new PodesavanjeProfilaService(dbPristup);
             uredjivanjeZaposlenihService=new UredjivanjeZaposlenihService(dbPristup);
             uredjivanjeProizvodaService = new UredjivanjeProizvodaService(dbPristup);

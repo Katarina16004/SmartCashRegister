@@ -32,7 +32,8 @@ namespace SmartCashRegister
         {
             InitializeComponent();
             _kreiranjeRacunaService=kreiranjeRacunaService;
-            this.prijavljeni = prijavljeni;
+            this.prijavljeni = prijavljeni; 
+            kreiranjeRacunaService.SetStavkeRacuna(new List<StavkaRacuna>()); //ukoliko se prethodno racun nije napravio, zaboravljamo njegove stavke
         }
 
         private void Button_DodajProizvod_Click(object sender, RoutedEventArgs e)
@@ -67,10 +68,8 @@ namespace SmartCashRegister
 
         private void Button_KreirajRacun_Click(object sender, RoutedEventArgs e)
         {
-            if(_kreiranjeRacunaService.KreirajRacun(prijavljeni.OsobaId))
-            {
-                dataGridStavkeRacuna.ItemsSource = null; //za novi racun
-            }
+            _kreiranjeRacunaService.KreirajRacun(prijavljeni.OsobaId);
+            dataGridStavkeRacuna.ItemsSource = null; //za novi racun
         }
 
         private void dataGridStavkeRacuna_SelectionChanged(object sender, SelectionChangedEventArgs e)

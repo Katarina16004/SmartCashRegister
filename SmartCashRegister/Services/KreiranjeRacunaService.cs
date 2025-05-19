@@ -12,16 +12,19 @@ using System.Windows;
 using Microsoft.Data.SqlClient;
 using System.Collections.ObjectModel;
 using System.Collections;
+using Accessibility;
 
 namespace SmartCashRegister.Services
 {
     public class KreiranjeRacunaService:IKreiranjeRacunaService
     {
         private readonly IPristupBaziService _dbPristup;
+        private readonly IUpravljanjeRacunomService _upravljanjeRacunomService;
         private List<StavkaRacuna> stavkeRacuna = new List<StavkaRacuna>();
-        public KreiranjeRacunaService(IPristupBaziService dbPristup)
+        public KreiranjeRacunaService(IPristupBaziService dbPristup, IUpravljanjeRacunomService upravljanjeRacunomService)
         {
             _dbPristup = dbPristup;
+            _upravljanjeRacunomService = upravljanjeRacunomService;
         }
         public bool DodajProizvod(string barkod, string kol)
         {
@@ -62,6 +65,11 @@ namespace SmartCashRegister.Services
         {
             return stavkeRacuna;
         }
+        public bool SetStavkeRacuna(List<StavkaRacuna> stavke)
+        {
+            stavkeRacuna = stavke;
+            return true;
+        }
         public bool ObrisiProizvod(StavkaRacuna selektovanaStavka)
         {
             stavkeRacuna.Remove(selektovanaStavka);
@@ -80,15 +88,22 @@ namespace SmartCashRegister.Services
             {
                 ukupnaCena += s.Ukupno; // sabiranje ukupne cene
             }
+            var potvrda = MessageBox.Show($"Ukupna cena računa: {ukupnaCena}", "Potvrda", MessageBoxButton.YesNo); //potvrdi se ukoliko je racun placen
+            if (potvrda != MessageBoxResult.Yes)
+            {
+                stavkeRacuna.Clear();
+                return false;
+            }
 
             string query = @"
                 INSERT INTO Racun (datum, cena, osoba_id, status) 
                 VALUES (@Datum, @Cena, @OsobaId, @Status);
                 SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
+            DateTime vremeKreiranja = DateTime.Now;
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@Datum", DateTime.Now),
+                new SqlParameter("@Datum", vremeKreiranja),
                 new SqlParameter("@Cena", ukupnaCena),
                 new SqlParameter("@OsobaId", osobaId),
                 new SqlParameter("@Status", "Aktivan")
@@ -121,8 +136,16 @@ namespace SmartCashRegister.Services
                 _dbPristup.ExecuteNonQuery(stavkaQuery, stavkaParameters.ToArray());
             }
 
-            MessageBox.Show($"Račun uspešno kreiran! ID računa: {racunId}\nCena: {ukupnaCena}");
+            var racun = new Racun
+            {
+                RacunId = racunId,
+                Datum = vremeKreiranja,
+                Cena = ukupnaCena,
+                OsobaId = osobaId,
+                Status = "Aktivan"
+            };
 
+            _upravljanjeRacunomService.IzveziUPDF(racun);
             stavkeRacuna.Clear();
             return true;
         }
