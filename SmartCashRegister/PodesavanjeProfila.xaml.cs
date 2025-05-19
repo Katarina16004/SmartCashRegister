@@ -81,6 +81,8 @@ namespace SmartCashRegister
 
         private void btnSacuvaj_Click(object sender, RoutedEventArgs e)
         {
+            if (!ProveriPolja())
+                return;
             bool uspesno = _podesavanjeProfilaService.SacuvajPromeneAkoPostoje(
                 prijavljeni,
                 txtIme.Text,
@@ -91,14 +93,21 @@ namespace SmartCashRegister
             );
 
             if (uspesno)
-            {
                 MessageBox.Show("Uspešno ste sačuvali promene");
-            }
-            else
-            {
-                MessageBox.Show("Nema promena za čuvanje");
-            }
 
+        }
+        private bool ProveriPolja()
+        {
+            if (string.IsNullOrWhiteSpace(txtIme.Text) ||
+                string.IsNullOrWhiteSpace(txtPrezime.Text) ||
+                string.IsNullOrWhiteSpace(txtTelefon.Text) ||
+                string.IsNullOrWhiteSpace(txtUsername.Text) ||
+                string.IsNullOrWhiteSpace(PasswordTextBox.Text))
+            {
+                MessageBox.Show("Sva polja moraju biti popunjena", "Greška", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            return true;
         }
     }
 }

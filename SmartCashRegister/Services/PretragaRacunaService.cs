@@ -2,6 +2,7 @@
 using SmartCashRegister.Services.Interfaces;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using System.Windows;
 
 namespace SmartCashRegister.Services
 {
@@ -45,8 +46,16 @@ namespace SmartCashRegister.Services
 
             if (!string.IsNullOrEmpty(idRacuna))
             {
-                query = query + " AND r.racun_id = @RacunId";
-                parameters.Add(new SqlParameter("@RacunId", idRacuna));
+                if (int.TryParse(idRacuna, out int id))
+                {
+                    query += " AND r.racun_id = @RacunId";
+                    parameters.Add(new SqlParameter("@RacunId", id));
+                }
+                else
+                {
+                    MessageBox.Show("ID mora biti ceo broj", "Neispravan format ID-a", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return filtrirani; //prazna lista
+                }
             }
 
             if (!string.IsNullOrEmpty(username))

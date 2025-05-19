@@ -178,6 +178,8 @@ namespace SmartCashRegister
             PasswordTextBox.Clear();
             Input_Uloga.SelectedIndex = -1;
             DataGrid_Zaposleni.SelectedItem = null;
+            Button_Izmeni.Visibility = Visibility.Hidden;
+            Button_Obrisi.Visibility = Visibility.Hidden;
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -203,9 +205,7 @@ namespace SmartCashRegister
                     OsveziDataGrid();
                     OcistiPolja();
                 }
-            }
-
-            
+            }            
         }
 
         private void Button_Izmeni_Click(object sender, RoutedEventArgs e)

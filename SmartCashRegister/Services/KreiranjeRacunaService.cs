@@ -28,7 +28,11 @@ namespace SmartCashRegister.Services
         }
         public bool DodajProizvod(string barkod, string kol)
         {
-            int trazenaKolicina = Convert.ToInt32(kol);
+            if (!int.TryParse(kol, out int trazenaKolicina) || trazenaKolicina <= 0)
+            {
+                MessageBox.Show("Količina mora biti ceo, pozitivan broj", "Neispravna količina", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
 
             string query = "SELECT * FROM Proizvod WHERE barkod = @Barkod";
             var parameters = new List<SqlParameter>

@@ -116,13 +116,13 @@ namespace SmartCashRegister
             {
                 if (!decimal.TryParse(Input_Cena.Text.Replace('.', ','), out decimal cena))
                 {
-                    MessageBox.Show("Cena nije validna");
+                    MessageBox.Show("Cena mora biti realan broj", "Neispravan format cene", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                if (!int.TryParse(Input_Kolicina.Text, out int kolicina))
+                if (!int.TryParse(Input_Kolicina.Text, out int kolicina) || kolicina<1)
                 {
-                    MessageBox.Show("Količina nije validna");
+                    MessageBox.Show("Količina mora biti ceo, pozitivan broj", "Neispravan format količine", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 Proizvod noviProizvod = new Proizvod
@@ -165,6 +165,8 @@ namespace SmartCashRegister
             Input_Barkod.Clear();
             ComboBox_Kategorija.SelectedIndex = -1;
             dataGridProizvodi.SelectedItem = null;
+            Button_Izmeni.Visibility = Visibility.Hidden;
+            Button_Obrisi.Visibility = Visibility.Hidden;
         }
         private void OsveziDataGrid()
         {
@@ -196,13 +198,13 @@ namespace SmartCashRegister
             {
                 if (!decimal.TryParse(Input_Cena.Text.Replace('.',','), out decimal cena))
                 {
-                    MessageBox.Show("Cena nije validna");
+                    MessageBox.Show("Cena mora biti realan broj", "Neispravan format cene", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                if (!int.TryParse(Input_Kolicina.Text, out int kolicina))
+                if (!int.TryParse(Input_Kolicina.Text, out int kolicina) || kolicina < 1)
                 {
-                    MessageBox.Show("Količina nije validna");
+                    MessageBox.Show("Količina mora biti ceo, pozitivan broj", "Neispravan format količine", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 bool nestoSePromenilo =

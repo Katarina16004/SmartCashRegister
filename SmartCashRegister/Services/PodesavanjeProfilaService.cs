@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using SmartCashRegister.Models;
+using System.Windows;
 
 namespace SmartCashRegister.Services.Interfaces
 {
@@ -39,12 +40,19 @@ namespace SmartCashRegister.Services.Interfaces
             }
             if (osoba.Sifra != novaLozinka)
             {
+                if(novaLozinka.Length<5 || novaLozinka.Contains(" "))
+                {
+                    MessageBox.Show("Lozinka mora imati najmanje 5 karaktera\ni ne sme da sadrzi razmake", "Neispravan format lozinke", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
                 uslovi.Add("sifra = @sifra");
                 parameters.Add(new SqlParameter("@sifra", novaLozinka));
             }
 
             if (uslovi.Count == 0)
             {
+                MessageBox.Show("Nema promena za čuvanje");
                 return false;
             }
 
