@@ -1,20 +1,8 @@
 ﻿using SmartCashRegister.Models;
-using SmartCashRegister.Services;
 using SmartCashRegister.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data;
 
 namespace SmartCashRegister
 {
@@ -24,10 +12,12 @@ namespace SmartCashRegister
     public partial class UredjivanjeKategorija : UserControl
     {
         private readonly IUredjivanjeKategorijaService _uredjivanjeKategorijaService;
-        public UredjivanjeKategorija(IUredjivanjeKategorijaService uredjivanjeKategorijaService)
+        private readonly IPristupBaziService _dbPristup;
+        public UredjivanjeKategorija(IUredjivanjeKategorijaService uredjivanjeKategorijaService , IPristupBaziService dbPristup)
         {
             _uredjivanjeKategorijaService = uredjivanjeKategorijaService;
             InitializeComponent();
+            _dbPristup = dbPristup;
         }
 
         private void Button_Pretrazi_Click(object sender, RoutedEventArgs e)
@@ -94,6 +84,49 @@ namespace SmartCashRegister
         {
             Input_Naziv.Clear();
             dataGridKategorije.SelectedItem = null;
+
+            Button_Izmeni.Visibility = Visibility.Hidden;
+            Button_Obrisi.Visibility = Visibility.Hidden;
+        }
+
+        private void Button_Obrisi_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridKategorije.SelectedItem is Kategorija selektovanaKategorija)
+            {
+                var potvrda = MessageBox.Show("Da li ste sigurni da želite da obrišete kategoriju?", "Potvrda", MessageBoxButton.YesNo);
+                if (potvrda != MessageBoxResult.Yes) return;
+
+                bool uspeh = _uredjivanjeKategorijaService.ObrisiKategoriju(selektovanaKategorija.KategorijaId);
+
+                if (uspeh)
+                {
+                    MessageBox.Show("Kategorija je obrisana");
+                    OsveziDataGrid();
+                    OcistiPolja();
+                }
+            }
+        }
+
+        private void dataGridKategorije_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dataGridKategorije.SelectedItem is Kategorija selektovanaKategorija)
+            {
+                PrikaziSelektovanu(selektovanaKategorija.KategorijaId);
+                Button_Obrisi.Visibility = Visibility.Visible;
+                Button_Izmeni.Visibility = Visibility.Visible;
+
+            }
+        }
+        private bool PrikaziSelektovanu(int kategorijaId)
+        {
+            string query = $"SELECT * FROM Kategorija WHERE kategorija_id={kategorijaId}";
+            DataTable dt = _dbPristup.ExecuteQuery(query);
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                Input_Naziv.Text = row["naziv"].ToString();
+            }
+            return true;
         }
     }
 }

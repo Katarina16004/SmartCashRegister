@@ -109,7 +109,7 @@ namespace SmartCashRegister
         private void ButtonUrediKategorije_Click(object sender, RoutedEventArgs e)
         {
             AktivanButton(ButtonUrediKategorije);
-            MainContent.Content = new UredjivanjeKategorija(uredjivanjeKategorijaService);
+            MainContent.Content = new UredjivanjeKategorija(uredjivanjeKategorijaService,dbPristup);
         }
     }
 }

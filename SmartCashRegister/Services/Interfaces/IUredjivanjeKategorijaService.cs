@@ -12,5 +12,6 @@ namespace SmartCashRegister.Services.Interfaces
         public IEnumerable<Kategorija> PrikaziSveKategorije();
         public IEnumerable<Kategorija> PretraziKategoriju(string naziv);
         public bool DodajKategoriju(Kategorija k);
+        public bool ObrisiKategoriju(int kategorijaId);
     }
 }

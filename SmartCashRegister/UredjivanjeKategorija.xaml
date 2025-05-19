@@ -23,7 +23,7 @@
 
            
             <DataGrid x:Name="dataGridKategorije" AutoGenerateColumns="False" Visibility="Hidden"
-                      Style="{StaticResource ModernDataGrid}" IsReadOnly="True" Height="250" Margin="0,0,0,10">
+                      Style="{StaticResource ModernDataGrid}" IsReadOnly="True" Height="250" Margin="0,0,0,10" SelectionChanged="dataGridKategorije_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID kategorije" Binding="{Binding KategorijaId}" Width="Auto"/>
                     <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" Width="*"/>
@@ -50,7 +50,7 @@
                     <Button x:Name="Button_Izmeni" Content="Sačuvaj promene" Margin="0,0,0,10"
                             Style="{StaticResource ModernButton}" Background="Khaki" Visibility="Hidden"/>
                     <Button x:Name="Button_Obrisi" Content="Obriši kategoriju" Margin="0,0,0,10"
-                            Style="{StaticResource ModernButton}" Background="Salmon" Visibility="Hidden"/>
+                            Style="{StaticResource ModernButton}" Background="Salmon" Visibility="Hidden" Click="Button_Obrisi_Click"/>
                 </StackPanel>
             </Grid>
         </StackPanel>

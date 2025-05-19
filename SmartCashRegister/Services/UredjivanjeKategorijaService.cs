@@ -82,5 +82,10 @@ namespace SmartCashRegister.Services
 
             return dt.Rows.Count > 0;
         }
+        public bool ObrisiKategoriju(int kategorijaId)
+        {
+            string query = $"DELETE FROM Kategorija WHERE kategorija_id = {kategorijaId}";
+            return _dbPristup.ExecuteNonQuery(query) > 0;
+        }
     }
 }
