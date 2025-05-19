@@ -28,30 +28,50 @@ namespace SmartCashRegister.Services
         }
         public bool DodajProizvod(string barkod, string kol)
         {
+            int trazenaKolicina = Convert.ToInt32(kol);
+
             string query = "SELECT * FROM Proizvod WHERE barkod = @Barkod";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Barkod", barkod)
             };
             DataTable result = _dbPristup.ExecuteQuery(query, parameters.ToArray());
+
             if (result.Rows.Count > 0)
             {
                 foreach (DataRow row in result.Rows)
                 {
                     int kolicinaNaSkladistu = Convert.ToInt32(row["kolicina"]);
-                    if (kolicinaNaSkladistu < Convert.ToInt32(kol))
+                    int vecDodato = 0;
+                    foreach (var stavka in stavkeRacuna)
                     {
-                        MessageBox.Show("Nema dovoljno proizvoda na skladištu");
+                        if (stavka.ProizvodId == Convert.ToInt32(row["proizvod_id"]))
+                        {
+                            vecDodato += stavka.Kolicina;
+                        }
+                    }
+
+                    int dostupnoZaDodavanje = kolicinaNaSkladistu - vecDodato;
+
+                    if (dostupnoZaDodavanje == 0)
+                    {
+                        MessageBox.Show("Nema više proizvoda na skladištu");
                         return false;
                     }
-                    StavkaRacuna stavka = new StavkaRacuna
+                    if (trazenaKolicina > dostupnoZaDodavanje)
+                    {
+                        MessageBox.Show($"Najviše što možete uzeti je {dostupnoZaDodavanje}");
+                        return false;
+                    }
+
+                    StavkaRacuna novaStavka = new StavkaRacuna
                     {
                         ProizvodId = Convert.ToInt32(row["proizvod_id"]),
                         Naziv = row["naziv"].ToString(),
                         Cena = Convert.ToDecimal(row["cena"]),
-                        Kolicina = Convert.ToInt32(kol)
+                        Kolicina = trazenaKolicina
                     };
-                    stavkeRacuna.Add(stavka);
+                    stavkeRacuna.Add(novaStavka);
                 }
             }
             else
@@ -61,6 +81,7 @@ namespace SmartCashRegister.Services
             }
             return true;
         }
+
         public List<StavkaRacuna> GetStavkeRacuna()
         {
             return stavkeRacuna;
@@ -134,6 +155,20 @@ namespace SmartCashRegister.Services
                 };
 
                 _dbPristup.ExecuteNonQuery(stavkaQuery, stavkaParameters.ToArray());
+
+                //azuriramo kolicine u bazi
+                string updateQuery = @"
+                    UPDATE Proizvod 
+                    SET kolicina = kolicina - @Kolicina 
+                    WHERE proizvod_id = @ProizvodId;";
+
+                var updateParams = new List<SqlParameter>
+                {
+                    new SqlParameter("@Kolicina", stavka.Kolicina),
+                    new SqlParameter("@ProizvodId", stavka.ProizvodId)
+                };
+
+                _dbPristup.ExecuteNonQuery(updateQuery, updateParams.ToArray());
             }
 
             var racun = new Racun
