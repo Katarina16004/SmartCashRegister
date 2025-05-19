@@ -3,6 +3,7 @@ using SmartCashRegister.Services.Interfaces;
 using System.Windows;
 using System.Windows.Controls;
 using System.Data;
+using SmartCashRegister.Services;
 
 namespace SmartCashRegister
 {
@@ -127,6 +128,34 @@ namespace SmartCashRegister
                 Input_Naziv.Text = row["naziv"].ToString();
             }
             return true;
+        }
+
+        private void Button_Izmeni_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridKategorije.SelectedItem is Kategorija selektovanaKategorija)
+            {
+                bool nestoSePromenilo = selektovanaKategorija.Naziv != Input_Naziv.Text;
+
+                if (!nestoSePromenilo)
+                {
+                    MessageBox.Show("Nema promena za čuvanje");
+                    return;
+                }
+
+                selektovanaKategorija.Naziv = Input_Naziv.Text;
+
+                if (ProveriPolja())
+                {
+                    bool uspeh = _uredjivanjeKategorijaService.IzmeniKategoriju(selektovanaKategorija);
+
+                    if (uspeh)
+                    {
+                        MessageBox.Show("Podaci su uspešno izmenjeni");
+                        OsveziDataGrid();
+                        OcistiPolja();
+                    }
+                }
+            }
         }
     }
 }

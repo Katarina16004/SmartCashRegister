@@ -48,7 +48,7 @@
                     <Button x:Name="Button_Dodaj" Content="Dodaj kategoriju" Margin="0,0,0,10"
                             Style="{StaticResource ModernButton}" Background="LightGreen" Click="Button_Dodaj_Click"/>
                     <Button x:Name="Button_Izmeni" Content="Sačuvaj promene" Margin="0,0,0,10"
-                            Style="{StaticResource ModernButton}" Background="Khaki" Visibility="Hidden"/>
+                            Style="{StaticResource ModernButton}" Background="Khaki" Visibility="Hidden" Click="Button_Izmeni_Click"/>
                     <Button x:Name="Button_Obrisi" Content="Obriši kategoriju" Margin="0,0,0,10"
                             Style="{StaticResource ModernButton}" Background="Salmon" Visibility="Hidden" Click="Button_Obrisi_Click"/>
                 </StackPanel>

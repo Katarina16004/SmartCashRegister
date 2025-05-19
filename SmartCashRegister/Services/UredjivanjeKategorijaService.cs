@@ -87,5 +87,26 @@ namespace SmartCashRegister.Services
             string query = $"DELETE FROM Kategorija WHERE kategorija_id = {kategorijaId}";
             return _dbPristup.ExecuteNonQuery(query) > 0;
         }
+        public bool IzmeniKategoriju(Kategorija k)
+        {
+            if (DaLiPostojiNazivOsimOvog(k.Naziv,k.KategorijaId))
+            {
+                MessageBox.Show("Kategorija sa istim nazivom već postoji");
+                return false;
+            }
+            string query = $@"
+                UPDATE Kategorija SET
+                    naziv = '{k.Naziv}'
+                WHERE kategorija_id = {k.KategorijaId}";
+
+            return _dbPristup.ExecuteNonQuery(query) > 0;
+        }
+        private bool DaLiPostojiNazivOsimOvog(string? naziv, int kategorijaId)
+        {
+            string query = $"SELECT * FROM Kategorija WHERE naziv = '{naziv}' AND kategorija_id!={kategorijaId}";
+            DataTable dt = _dbPristup.ExecuteQuery(query);
+
+            return dt.Rows.Count > 0;
+        }
     }
 }
