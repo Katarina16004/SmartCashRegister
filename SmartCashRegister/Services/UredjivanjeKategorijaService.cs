@@ -3,6 +3,7 @@ using SmartCashRegister.Services.Interfaces;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Runtime.Intrinsics.X86;
+using System.Windows;
 
 namespace SmartCashRegister.Services
 {
@@ -58,6 +59,28 @@ namespace SmartCashRegister.Services
                 }
             }
             return filtrirane;
+        }
+        public bool DodajKategoriju(Kategorija k)
+        {
+            if (DaLiPostojiNaziv(k.Naziv))
+            {
+                MessageBox.Show("Kategorija sa istim nazivom već postoji");
+                return false;
+            }
+
+            string query = $"INSERT INTO Kategorija (naziv) " +
+                           $"VALUES ('{k.Naziv}')";
+
+            int rezultat = _dbPristup.ExecuteNonQuery(query);
+
+            return rezultat > 0;
+        }
+        private bool DaLiPostojiNaziv(string? naziv)
+        {
+            string query = $"SELECT * FROM Kategorija WHERE naziv = '{naziv}'";
+            DataTable dt = _dbPristup.ExecuteQuery(query);
+
+            return dt.Rows.Count > 0;
         }
     }
 }

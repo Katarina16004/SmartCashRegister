@@ -1,4 +1,6 @@
-﻿using SmartCashRegister.Services.Interfaces;
+﻿using SmartCashRegister.Models;
+using SmartCashRegister.Services;
+using SmartCashRegister.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +53,47 @@ namespace SmartCashRegister
             {
                 Button_Pretrazi.Content = "Prikazi sve";
             }
+        }
+
+        private void Button_Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProveriPolja())
+            {
+                Kategorija novaKat = new Kategorija
+                {
+                    Naziv = Input_Naziv.Text
+                };
+
+                bool uspeh = _uredjivanjeKategorijaService.DodajKategoriju(novaKat);
+
+                if (uspeh)
+                {
+                    MessageBox.Show("Kategorija je uspešno dodata");
+                    OsveziDataGrid();
+                    OcistiPolja();
+                }
+            }
+        }
+        private void OsveziDataGrid()
+        {
+            dataGridKategorije.ItemsSource = null;
+            dataGridKategorije.ItemsSource = _uredjivanjeKategorijaService.PrikaziSveKategorije();
+        }
+        private bool ProveriPolja()
+        {
+            
+            if (Input_Naziv.Text == "")
+            {
+                MessageBox.Show("Morate popuniti polje");
+                return false;
+            }
+            return true;
+        }
+
+        private void OcistiPolja()
+        {
+            Input_Naziv.Clear();
+            dataGridKategorije.SelectedItem = null;
         }
     }
 }
